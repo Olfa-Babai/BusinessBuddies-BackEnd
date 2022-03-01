@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
-	private Long User_Id ;
+	private long User_Id ;
 	@Column(nullable=false, length=20)
 	private String UserFirstName;
 	private String UserName;
@@ -68,8 +69,8 @@ public class User implements Serializable {
 		
 //Communication
 		@JsonIgnore
-		@ManyToMany
-		private List<Followage> follows;
+		@ManyToMany(cascade = CascadeType.ALL, mappedBy="followers")
+		private List<Followage> follows=new ArrayList<Followage>();
 		
 		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="publisher")
