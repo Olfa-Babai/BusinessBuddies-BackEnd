@@ -23,11 +23,15 @@ public class FollowageController {
 	@Autowired
 	IFollowageService followageService;
 	
+	//follow
+	
 	@PostMapping("/add-followage/{idu}")
 	@ResponseBody
 	public void addFollow(@PathVariable("idu") long idu,@RequestBody Followage f ){
 		followageService.addFollow(idu, f);
 	}
+	
+	//unfollow
 	
 	@DeleteMapping("/delete-followage/{idf}")
 	@ResponseBody
@@ -35,17 +39,23 @@ public class FollowageController {
 		followageService.unfollow(idf);
 	}
 	
+	//finding a specific followage of a user by theme (ex: the link between the theme techno and user 1)
+	
 	@GetMapping("/find-followage/{idu}")
 	@ResponseBody
 	public Followage findByThemeAndUser(@PathVariable("idu") long idu,@RequestParam String theme) {
 		return followageService.findByThemeAndUser(idu, theme);
 	}
 	
+	// a user's followings 
+	
 	@GetMapping("/find-followings/{idu}")
 	@ResponseBody
 	public List<Followage> followingsOfUser(@PathVariable("idu") long idu){
 		return followageService.followersU(idu);
 	}
+	
+	// the nb of followings
 	
 	@GetMapping("/nb-followings/{idu}")
 	@ResponseBody
