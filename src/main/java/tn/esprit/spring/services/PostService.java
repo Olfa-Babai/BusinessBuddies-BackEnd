@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.*;
 
 @Service
@@ -26,29 +27,38 @@ public class PostService implements IPostService {
 
 	@Override
 	public void updatePost(Post p, int idp) {
-		postRepository.save(p);		
+		Post post=postRepository.findById(idp).get();
+		post.setTitle(p.getTitle());
+		post.setBody(p.getBody());
+		post.setTheme(p.getTheme());
+		postRepository.save(post);	
 	}
 
 	@Override
 	public void deletePost(int idp) {
-		postRepository.delete(postRepository.findById(idp).orElse(null));
+		postRepository.delete(postRepository.findById(idp).get());
 	}
 
 	@Override
-	public void showPostsByUser(Post p, int idu) {
-	// show posts by user
+	public List<Post> showPostsByUser(Post p, long idu) {
+		User u=userRepository.findById(idu).get();
+		return u.getPosts();
 	}
 
 	@Override
 	public List<Post> showPostsByTheme(String theme) {
-		List<Post> allposts= (List<Post>) postRepository.findAll();
+		List<Post> allposts= postRepository.findAll();
 		List<Post> posts=new  ArrayList<Post>();
-		for(Post post : allposts){
-			if (post.getTheme().equals(theme)){
-				posts.add(post);
-				}
+		if(theme.equals("all")) 
+			return allposts;
+		else{
+			for(Post post : allposts){
+				if (post.getTheme().toString().equals(theme)){
+					posts.add(post);
+					}
+			}
+			return posts;
 		}
-		return posts;
 	}
 	
 	@Override
@@ -59,9 +69,8 @@ public class PostService implements IPostService {
 	@Override
 	public List<Post> searchPosts(String s, String t) {
 		List<Post> posts=new ArrayList<Post>();
-		List<Post> allposts=(List<Post>)postRepository.findAll();
-		for(Post p : allposts){
-			if (p.getBody().equals(s) || p.getTitle().equals(s) && p.getTheme().equals(t)) {
+		for(Post p : showPostsByTheme(t)){
+			if (p.getBody().indexOf("aaaa")!=-1) {
 			posts.add(p);
 			}			
 		}

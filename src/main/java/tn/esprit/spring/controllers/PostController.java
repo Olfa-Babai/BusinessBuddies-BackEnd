@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,15 +36,15 @@ public class PostController {
 		postService.updatePost(p, idp);
 	}
 	
-	@DeleteMapping("/delete-post")
+	@DeleteMapping("/delete-post/{idp}")
 	@ResponseBody
 	public void deletePost(@PathVariable("idp") int idp){
 		postService.deletePost(idp);
 	}
 	
-	@GetMapping("/show-post/{theme}")
+	@GetMapping("/show-post/")
 	@ResponseBody
-	public List<Post> showPostsByTheme(@PathVariable("theme") String theme){
+	public List<Post> showPostsByTheme(@RequestParam String theme){
 		if(theme.toLowerCase().equals("all")){
 			return postService.showAllPosts();
 		}
@@ -51,9 +52,12 @@ public class PostController {
 		return postService.showPostsByTheme(theme);
 	}
 	
+	//meg kel elnézni
+	
 	@GetMapping("/show-post/{theme}/{research}")
 	@ResponseBody
-	public List<Post> searchPosts(@PathVariable("theme") String t,@PathVariable("research") String r){
+	public List<Post> searchPosts(@RequestParam String t,@RequestParam String r){
+		System.out.println(r);
 		return postService.searchPosts(r, t);
 	}
 }
