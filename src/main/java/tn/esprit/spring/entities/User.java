@@ -69,8 +69,8 @@ public class User implements Serializable {
 		
 //Communication
 		@JsonIgnore
-		@ManyToMany(cascade = CascadeType.ALL, mappedBy="followers")
-		private List<Followage> follows=new ArrayList<Followage>();
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="follower")
+		private List<Followage> followings;
 		
 		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="publisher")

@@ -2,6 +2,7 @@ package tn.esprit.spring.services;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ public class FollowageService implements IFollowageService {
 	@Override
 	public void addFollow(long idUser, Followage followage) {
 		User u=userRepository.findById(idUser).orElse(null);
-		u.getFollows().add(followage);
-		followage.getFollowers().add(u);
+		followage.setFollower(u);
 		followageRepository.save(followage);
 	}
 
@@ -33,21 +33,31 @@ public class FollowageService implements IFollowageService {
 	}
 	
 	@Override
-	public List<Followage> followersU(long idu) {
+	public List<Followage> followingsOfU(long idu) {
 		User u=userRepository.findById(idu).get();
-		return u.getFollows();
+		return u.getFollowings();
 	}
 
+	
 	@Override
-	public Followage findByThemeAndUser(long idu, String theme) {
-		for(Followage f : followersU(idu)){
-			if(f.getTheme().toString().equals(theme)){
-				return f;
-			}
+	public List<User> followersTheme(String theme){
+		List<User> fs=new ArrayList<User>();				
+		for(Followage f : followageRepository.findAll()){
+			if(f.getTheme().toString().equals(theme))
+				fs.add(f.getFollower());
 		}
-		return null;
+		return fs;
 	}
 	
+	@Override
+	public Followage bestRatedThemeUser(long idu){
+		User u=userRepository.findById(idu).get();		
+		return u.getFollowings().stream().max(Comparator.comparing(Followage::getRating)).get();
+	}
 	
-	
+	/*@Override
+	public String bestRatedAll(){
+		List<String> fs=followageRepository.searchMaxRatedTheme();
+		return fs.toString();
+	}*/
 }

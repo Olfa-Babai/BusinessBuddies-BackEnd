@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,12 +32,8 @@ public class Followage implements Serializable {
 	private int idfollowage;
 	@Enumerated(EnumType.STRING)
 	private Theme theme;
-	
-	@JoinTable(name = "follows_users",
-            joinColumns = { @JoinColumn(name = "idfollowage", referencedColumnName = "idfollowage") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") }
-    )
+	private int rating;
 	 @JsonIgnore
-	 @ManyToMany
-	 private List<User> followers=new ArrayList<User>();
+	 @ManyToOne
+	 private User follower;
 }

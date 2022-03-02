@@ -23,10 +23,10 @@ public class PostController {
 	@Autowired
 	IPostService postService;
 	
-	@PostMapping("/add-post")
+	@PostMapping("/add-post/{idu}")
 	@ResponseBody
-	public void addpost(Post p){
-		postService.addPost(p);
+	public void addpost(@PathVariable("idu") long idu,@RequestBody Post p){
+		postService.addPost(idu,p);
 	}
 	
 	@PutMapping("/update-post/{idp}")

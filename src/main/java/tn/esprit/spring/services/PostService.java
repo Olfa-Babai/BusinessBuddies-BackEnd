@@ -7,16 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Post;
-import tn.esprit.spring.repositories.PostRepository;
+import tn.esprit.spring.repositories.*;
 
 @Service
 public class PostService implements IPostService {
 
 	@Autowired
 	PostRepository postRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
-	public void addPost(Post p) {
+	public void addPost(long idu,Post p) {
+		p.setPublisher(userRepository.findById(idu).get());
 		postRepository.save(p);
 	}
 
