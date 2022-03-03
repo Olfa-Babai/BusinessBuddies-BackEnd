@@ -54,7 +54,7 @@ public class PostController {
 	
 	//meg kel elnézni
 	
-	@GetMapping("/show-post/{theme}/{research}")
+	@GetMapping("/search-post/")
 	@ResponseBody
 	public List<Post> searchPosts(@RequestParam String t,@RequestParam String r){
 		System.out.println(r);

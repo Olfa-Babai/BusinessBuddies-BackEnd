@@ -9,8 +9,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Comment;
+import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.repositories.CommentRepository;
 import tn.esprit.spring.repositories.PostRepository;
+import tn.esprit.spring.repositories.UserRepository;
 
 @Service
 public class CommentService implements ICommentService {
@@ -21,16 +23,22 @@ public class CommentService implements ICommentService {
 	@Autowired
 	PostRepository postRepository;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 	@Override
-	public void addComment(Comment c, int idp) {
-		c.setPost(postRepository.findById(idp).orElse(null));
+	public void addComment(Comment c, int idp, long idu) {
+		c.setPost(postRepository.findById(idp).get());
+		c.setCommenter(userRepository.findById(idu).get());
 		commentRepository.save(c);
 	}
 
 	@Override
 	public void updateComment(Comment c, int idc) {
-		if(containsComment(idc))
-			commentRepository.save(c);
+			Comment comment=commentRepository.findById(idc).get();
+			comment.setBody(c.getBody());
+			comment.setPublished(c.getPublished());
+			commentRepository.save(comment);
 	}
 
 	@Override
@@ -64,5 +72,19 @@ public class CommentService implements ICommentService {
 	public List<Comment> recentCommentsByPost(int idpost) {
 		return commentRepository.findAll(Sort.by(Direction.DESC,"published"));
 	}
+	
+	@Override
+	public Post mostCommentedPost(){
+			List<Post> allposts=postRepository.findAll();
+			Post selected=new Post();
+			int max=0;
+			for(Post p : allposts){
+				if(p.getComments().size()>max){
+					max=p.getComments().size();
+					selected=p;
+				}
+			}
+			return selected;
+		}
 	
 }

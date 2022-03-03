@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Comment;
+import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.services.*;
 
 @RestController
@@ -23,15 +24,15 @@ public class CommentController {
 	@Autowired
 	ICommentService commentService;
 	
-	@PostMapping("/add-comment/{idp}")
+	@PostMapping("/add-comment/{idp}/{idu}")
 	@ResponseBody
-	public void addComment(@PathVariable("idp")int idp, @RequestBody Comment c){
-		commentService.addComment(c, idp);
+	public void addComment(@PathVariable("idp")int idp, @PathVariable("idu")long idu , @RequestBody Comment c){
+		commentService.addComment(c, idp, idu);
 	}
 	
 	@PutMapping("/update-comment/{idc}")
 	@ResponseBody
-	public void updateComment(@PathVariable("idc")int idc, Comment c){
+	public void updateComment(@PathVariable("idc")int idc, @RequestBody Comment c){
 		commentService.updateComment(c, idc);
 	}
 	
@@ -41,10 +42,21 @@ public class CommentController {
 		commentService.deleteComment(idc);
 	}
 	
-	@GetMapping("/show-post/{idp}")
+	@GetMapping("/show-comments/{idp}")
 	@ResponseBody
 	public List<Comment> viewCommentsByPost(@PathVariable("idp")int idp){
 		return commentService.viewCommentsByPost(idp);
 	}
 	
+	@GetMapping("/sort-comments/{idp}")
+	@ResponseBody
+	public List<Comment> recentCommentsByPost(@PathVariable("idp")int idp){
+		return commentService.recentCommentsByPost(idp);
+	}
+	
+	@GetMapping("/most-comments")
+	@ResponseBody
+	public Post mostCommentedPost(){
+		return commentService.mostCommentedPost();
+	}
 }

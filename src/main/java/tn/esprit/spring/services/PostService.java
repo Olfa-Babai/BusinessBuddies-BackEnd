@@ -49,16 +49,12 @@ public class PostService implements IPostService {
 	public List<Post> showPostsByTheme(String theme) {
 		List<Post> allposts= postRepository.findAll();
 		List<Post> posts=new  ArrayList<Post>();
-		if(theme.equals("all")) 
-			return allposts;
-		else{
 			for(Post post : allposts){
 				if (post.getTheme().toString().equals(theme)){
 					posts.add(post);
 					}
 			}
-			return posts;
-		}
+		return posts;
 	}
 	
 	@Override
@@ -70,7 +66,7 @@ public class PostService implements IPostService {
 	public List<Post> searchPosts(String s, String t) {
 		List<Post> posts=new ArrayList<Post>();
 		for(Post p : showPostsByTheme(t)){
-			if (p.getBody().indexOf("aaaa")!=-1) {
+			if (p.getBody().contains(s) || p.getTitle().contains(s)) {
 			posts.add(p);
 			}			
 		}

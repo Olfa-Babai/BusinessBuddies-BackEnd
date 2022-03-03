@@ -34,13 +34,15 @@ public class Comment implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idcomment;
 	private String body;
-	private int likes;
-	private int dislikes;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(style="yyyy-MM-dd")
 	private Date published;
 	
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Post post;
+	
+	@JsonIgnore
+	@ManyToOne
+	private User commenter;
 }
