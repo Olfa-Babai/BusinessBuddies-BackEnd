@@ -13,6 +13,7 @@ public interface IPostService {
 	List<Post> showPostsByTheme(String t);
 	List<Post> showAllPosts();
 	List<Post> searchPosts(String p, String t);
+	List<Post> recommendedPosts(long idu);
 	
 	// research + filter
 	

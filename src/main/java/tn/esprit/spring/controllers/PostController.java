@@ -60,12 +60,16 @@ public class PostController {
 	}
 	
 	//meg kel elnézni
-	
 	@GetMapping("/search-post/")
 	@ResponseBody
 	public List<Post> searchPosts(@RequestParam String t,@RequestParam String r){
-		System.out.println(r);
 		return postService.searchPosts(r, t);
+	}
+	
+	@GetMapping("/recommend-post/")
+	@ResponseBody
+	public List<Post> recommendedPosts(){
+		return null;
 	}
 }
 

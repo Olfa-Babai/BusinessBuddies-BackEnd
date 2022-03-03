@@ -3,6 +3,7 @@ package tn.esprit.spring.services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Like;
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.TypeLike;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.LikeRepository;
@@ -77,22 +79,19 @@ public class LikeService implements ILikeService {
 	}
 	
 	@Override
-	public List<Post> mostLikedPosts(String theme){
-		TreeMap<Integer,Integer> ints=new TreeMap<Integer,Integer>();
-		for(Post p : postService.showPostsByTheme(theme)){
-			List<User> likes=new ArrayList<User>();
-			for(Like l : p.getLikes()){
-				if (l.getType().equals(TypeLike.like)){
-					likes.add(l.getLiker()); }
-			ints.put(p.getIdpost(), likes.size());
+	public Theme mostLikedPostsTheme(long idu){
+		User u=userRepository.getById(idu);
+		HashMap<Theme,Integer> comp=new HashMap<Theme,Integer>();
+		Theme[] themes=Theme.values();
+		for(Theme t: themes){
+			int nb=0;
+			for(Like l : u.getLikes()){
+				if((l.getPost().getTheme().equals(t)) && (l.getType().equals(TypeLike.like))){
+					nb++;
+				}
 			}
+			comp.put(t, nb);
 		}
-		ints.entrySet().stream().sorted(Map.Entry.comparingByValue());
-		List<Post> posts=new ArrayList<Post>();
-		List<Integer> idposts=new ArrayList<Integer>(ints.keySet());
-		for(int i : idposts){
-			posts.add(postRepository.getById(i));
-		}
-		return posts;
+		return Collections.max(comp.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
 	}
 }

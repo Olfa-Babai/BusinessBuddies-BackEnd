@@ -54,8 +54,8 @@ public class FollowageService implements IFollowageService {
 		User u=userRepository.findById(idu).get();		
 		return u.getFollowings().stream().max(Comparator.comparing(Followage::getRating)).get();
 	}
-	
-	/*@Override
+	/*
+	@Override
 	public String bestRatedAll(){
 		List<String> fs=followageRepository.searchMaxRatedTheme();
 		return fs.toString();

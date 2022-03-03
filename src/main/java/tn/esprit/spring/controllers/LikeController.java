@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Like;
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.services.ILikeService;
 
 @RestController
@@ -48,10 +49,10 @@ public class LikeController {
 		return likeService.showPostsDislikes(idp);
 	}
 	
-	@GetMapping("/most-liked-posts/")
+	@GetMapping("/most-liked-theme/{idu}")
 	@ResponseBody
-	public List<Post> mostLikedPosts(@RequestParam String theme){
-			return likeService.mostLikedPosts(theme);	
+	public Theme mostLikedPosts(@PathVariable("idu")long idu){
+			return likeService.mostLikedPostsTheme(idu);	
 	}
 	
 }

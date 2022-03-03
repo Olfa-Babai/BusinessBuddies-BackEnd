@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Followage;
+import tn.esprit.spring.entities.Like;
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.*;
 
@@ -19,6 +22,12 @@ public class PostService implements IPostService {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	IFollowageService followageService;
+	
+	@Autowired
+	ILikeService likeService;
+	
 	@Override
 	public void addPost(long idu,Post p) {
 		p.setPublisher(userRepository.findById(idu).get());
@@ -71,6 +80,37 @@ public class PostService implements IPostService {
 			}			
 		}
 		return posts;
+	}
+	
+	public List<Post> postsNotLikedNotPosted(String theme,long idu){
+		List<Post> posts=new ArrayList<Post>();
+		boolean test=false;
+		for(Post p : showPostsByTheme(theme)){
+			if( !(p.getPublisher().equals(userRepository.findById(idu))) ){
+				for(Like l : p.getLikes()){
+					if (!(l.getLiker().equals(userRepository.findById(idu))))
+					{
+						posts.add(p);
+					}
+				}
+			}
+		}
+		return posts;
+	}
+	
+	@Override
+	public List<Post> recommendedPosts(long idu){
+		List<Post> posts=new ArrayList<Post>();
+		User u=userRepository.getById(idu);
+		Theme theme1=followageService.bestRatedThemeUser(idu).getTheme();
+		Theme theme2=likeService.mostLikedPostsTheme(idu);
+		
+		if(theme1.equals(theme2)){
+			return postsNotLikedNotPosted(theme1.toString(), idu);
+		}
+		else {
+			return null;
+		}
 	}
 	
 }
