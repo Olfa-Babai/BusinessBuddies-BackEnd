@@ -22,9 +22,13 @@ public class MessageController {
 	@Autowired
 	IMessageService messageService;
 	
+	@Autowired
+	IDictionnaryService dictionnaryService;
+	
 	@PostMapping("/add-message/{ids}/{idr}")
 	@ResponseBody
 	void addMessage(@RequestBody Message m,@PathVariable("ids") long ids,@PathVariable("idr") long idr){
+		m.setBody(dictionnaryService.wordsChecked(m.getBody()));
 		messageService.addMessage(m,ids,idr);
 	}
 	

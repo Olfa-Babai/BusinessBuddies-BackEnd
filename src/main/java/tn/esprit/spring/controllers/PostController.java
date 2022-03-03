@@ -24,15 +24,22 @@ public class PostController {
 	@Autowired
 	IPostService postService;
 	
+	@Autowired
+	IDictionnaryService dictionnaryService;
+	
 	@PostMapping("/add-post/{idu}")
 	@ResponseBody
 	public void addpost(@PathVariable("idu") long idu,@RequestBody Post p){
+		p.setTitle(dictionnaryService.wordsChecked(p.getTitle()));
+		p.setBody(dictionnaryService.wordsChecked(p.getBody()));
 		postService.addPost(idu,p);
 	}
 	
 	@PutMapping("/update-post/{idp}")
 	@ResponseBody
 	public void updatePost(@RequestBody Post p, @PathVariable("idp") int idp){
+		p.setTitle(dictionnaryService.wordsChecked(p.getTitle()));
+		p.setBody(dictionnaryService.wordsChecked(p.getBody()));
 		postService.updatePost(p, idp);
 	}
 	

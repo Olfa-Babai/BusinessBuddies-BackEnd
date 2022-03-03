@@ -23,16 +23,20 @@ public class CommentController {
 
 	@Autowired
 	ICommentService commentService;
+	@Autowired 
+	IDictionnaryService dictionnaryService;
 	
 	@PostMapping("/add-comment/{idp}/{idu}")
 	@ResponseBody
 	public void addComment(@PathVariable("idp")int idp, @PathVariable("idu")long idu , @RequestBody Comment c){
+		c.setBody(dictionnaryService.wordsChecked(c.getBody()));
 		commentService.addComment(c, idp, idu);
 	}
 	
 	@PutMapping("/update-comment/{idc}")
 	@ResponseBody
 	public void updateComment(@PathVariable("idc")int idc, @RequestBody Comment c){
+		c.setBody(dictionnaryService.wordsChecked(c.getBody()));
 		commentService.updateComment(c, idc);
 	}
 	
