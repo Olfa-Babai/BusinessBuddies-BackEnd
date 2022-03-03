@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -47,9 +48,7 @@ public class Message implements Serializable {
 	private String body;
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(style="yyyy-MM-dd")
-	private Date date;
+	private LocalDateTime date;
 	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)

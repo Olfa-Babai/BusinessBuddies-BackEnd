@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,30 +22,21 @@ public class MessageController {
 	@Autowired
 	IMessageService messageService;
 	
-	@PostMapping("/add-message")
+	@PostMapping("/add-message/{ids}/{idr}")
 	@ResponseBody
-	void addMessage(@RequestBody Message m){
-		messageService.addMessage(m);
+	void addMessage(@RequestBody Message m,@PathVariable("ids") long ids,@PathVariable("idr") long idr){
+		messageService.addMessage(m,ids,idr);
 	}
 	
-	@GetMapping("/sorting-messages/{s}")
+	@GetMapping("/list-messages/{ids}/{idr}")
 	@ResponseBody
-	List<Message> sortingMessages(@PathVariable("s") String s){
-		if(s.toLowerCase().equals("asc")){
-			return messageService.sortByDateA();
-		}
-		else if (s.toLowerCase().equals("desc")){
-			return messageService.sortByDateD();
-		}
-		else if (s.toLowerCase().equals("none")){
-			return messageService.listMessages();
-		}
-		else return null;
+	List<Message> listConversation(@PathVariable("ids") long ids,@PathVariable("idr") long idr){
+		return messageService.listMessages(ids,idr);
 	}
 	
-	@GetMapping("/search-messages/{m}")
+	@GetMapping("/search-messages/{idu}")
 	@ResponseBody
-	List<Message> searchMessages(@PathVariable("m") String m){
-		return messageService.searchMessages(m);
+	List<Message> searchMessages(@RequestParam String m, @PathVariable("idu") long idu){
+		return messageService.searchMessages(m,idu);
 	}
 }

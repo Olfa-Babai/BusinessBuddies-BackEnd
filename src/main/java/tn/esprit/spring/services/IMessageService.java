@@ -6,10 +6,8 @@ import tn.esprit.spring.entities.Message;
 
 public interface IMessageService {
 
-	void addMessage(Message m);
-	// send message
-	List<Message> sortByDateA();
+	void addMessage(Message m, long ids, long idr);
 	List<Message> sortByDateD();
-	List<Message> searchMessages(String s);
-	List<Message> listMessages();
+	List<Message> searchMessages(String s,long idu);
+	List<Message> listMessages(long ids, long idr);
 }
