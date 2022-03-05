@@ -17,23 +17,35 @@ public class ChatService implements IChatService{
 	ChatRepository chatRepository;
 
 	@Override
-	public void addChat(Chat c) {
-		chatRepository.save(c);
+	public Chat addChat(Chat c) {
+		return chatRepository.save(c);
 	}
 
 	@Override
-	public List<Chat> listChats() {
-		return (List<Chat>) chatRepository.findAll();
+	public List<Chat> listChats(long idu) {
+		List<Chat> listChats=new ArrayList<Chat>();
+		boolean test=false;
+		for(Chat c : chatRepository.findAll()){
+			for(Message m : c.getMessages()){
+				if(m.getReceiver().getUser_Id()==idu || m.getSender().getUser_Id()==idu){
+					test=true;
+				}
+			if (test==true){
+				listChats.add(c);
+			}
+			}
+		}
+		return listChats;
 	}
 
 	// recherche a travers un message échangé
 	@Override
-	public List<Chat> research(String research) {
+	public List<Chat> research(String research, long idu) {
 		List<Chat> chats=new ArrayList<Chat>();
 		List<Chat> allchats=(List<Chat>)chatRepository.findAll();
 		for(Chat c : allchats){
 			for(Message m : c.getMessages()){
-				if (m.getBody().contains(research)){
+				if (m.getBody().contains(research) && (m.getReceiver().getUser_Id()==idu || m.getSender().getUser_Id()==idu) ){
 					chats.add(c);
 				}
 			}
@@ -62,6 +74,12 @@ public class ChatService implements IChatService{
 
 	public boolean containsChat(int idc){
 		return chatRepository.findById(idc).orElse(null)!=null;
+	}
+
+	@Override
+	public void addChat(Chat c, long ids, long idr) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

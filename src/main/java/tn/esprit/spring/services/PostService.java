@@ -109,7 +109,9 @@ public class PostService implements IPostService {
 			return postsNotLikedNotPosted(theme1.toString(), idu);
 		}
 		else {
-			return null;
+			posts.addAll(postsNotLikedNotPosted(theme1.toString(), idu));
+			posts.addAll(postsNotLikedNotPosted(theme2.toString(), idu));
+			return posts;
 		}
 	}
 	

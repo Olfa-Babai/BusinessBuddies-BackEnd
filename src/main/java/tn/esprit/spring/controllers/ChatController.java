@@ -29,19 +29,19 @@ public class ChatController {
 		chatService.addChat(c);
 	}
 	
-	@GetMapping("/list-chats")
+	@GetMapping("/list-chats/{idu}")
 	@ResponseBody
-	public List<Chat> listChats(){
-		return chatService.listChats();
+	public List<Chat> listChats(@PathVariable("idu") int idu){
+		return chatService.listChats(idu);
 	}
 	
-	@GetMapping("/research-chats")
+	@GetMapping("/research-chats/{idu}")
 	@ResponseBody
-	public List<Chat> researchChat(@RequestParam String research){
-		return chatService.research(research);
+	public List<Chat> researchChat(@PathVariable("idu") long idu,@RequestParam String research){
+		return chatService.research(research, idu);
 	}
 	
-	@DeleteMapping("/delete-chat")
+	@DeleteMapping("/delete-chat/{id}")
 	@ResponseBody
 	public void deleteChat(@PathVariable("id") int id){
 		chatService.deleteChat(id);

@@ -14,7 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Chat;
 import tn.esprit.spring.entities.Message;
+import tn.esprit.spring.repositories.ChatRepository;
 import tn.esprit.spring.repositories.MessageRepository;
 import tn.esprit.spring.repositories.UserRepository;
 
@@ -27,10 +29,35 @@ public class MessageService implements IMessageService {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	ChatRepository chatRepository;
+	
+	@Autowired
+	IChatService chatService;
+	
 	@Override
 	public void addMessage(Message m, long ids, long idr) {
+		Message message=new Message();
+		boolean test=false;
 		m.setSender(userRepository.getById(ids));
-		m.setReceiver(userRepository.getById(idr)); 
+		m.setReceiver(userRepository.getById(idr));
+		for(Message msg : messageRepository.findAll()){
+			if (msg.getReceiver().equals(m.getReceiver()) || msg.getSender().equals(m.getReceiver())){
+				message=msg;
+				test=true;
+			}
+		}
+		if(test==true){
+			int n=message.getChat().getNbmessages()+1;
+			message.getChat().setNbmessages(n);
+			m.setChat(message.getChat());
+		}
+		else
+		{
+			Chat c=new Chat();
+			c.setNbmessages(1);
+			m.setChat(chatService.addChat(c));
+		} 
 	    m.setDate(LocalDateTime.now());
 		messageRepository.save(m);
 	}

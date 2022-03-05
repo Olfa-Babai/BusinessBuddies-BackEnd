@@ -66,8 +66,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	private Domain domain;
-		
+	
 //Communication
+		private MailMessage mailMessage;
 		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="follower")
 		private List<Followage> followings;
