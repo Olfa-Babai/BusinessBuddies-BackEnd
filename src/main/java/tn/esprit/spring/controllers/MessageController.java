@@ -28,10 +28,6 @@ public class MessageController {
 	
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	IEmailServiceCommunication emailService;
-	
 	@Autowired
 	IDictionnaryService dictionnaryService;
 	
@@ -47,6 +43,7 @@ public class MessageController {
 				    "We would like to inform you that you recieved a message from "+ us.getUserFirstName()+" "+us.getUserName(),
 					"New message!");
 		} */
+	//	emailService.sendSimpleEmail("olfa.babai@esprit.tn", "Ahla b chahla", "bussiness budddddddiessss");
 	}
 	
 	@PutMapping("/activate/{idu}")
