@@ -49,4 +49,59 @@ public class Trip implements Serializable {
 	@ManyToMany()
 	private List <User> users;
 
+	public int getIdTrip() {
+		return idTrip;
+	}
+
+	public void setIdTrip(int idTrip) {
+		this.idTrip = idTrip;
+	}
+
+	public String getDuree() {
+		return duree;
+	}
+
+	public void setDuree(String duree) {
+		this.duree = duree;
+	}
+
+	public String getTripobject() {
+		return tripobject;
+	}
+
+	public void setTripobject(String tripobject) {
+		this.tripobject = tripobject;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public List<Program> getPrograms() {
+		return programs;
+	}
+
+	public void setPrograms(List<Program> programs) {
+		this.programs = programs;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 }

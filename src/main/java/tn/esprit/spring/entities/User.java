@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,17 +54,27 @@ public class User implements Serializable {
 	private int CIN ;
 	@Column(length=50)
 	private String ServiceType;
+	public String[] getAuthorities() {
+		return authorities;
+	}
+
+
+	public void setAuthorities(String[] authorities) {
+		this.authorities = authorities;
+	}
+
+
 	@Column
 	private int NumberOfEmployees ;
 	@Column(nullable=false)
 	private String Password;
-	@Enumerated(EnumType.STRING)
-	private Role role;	
+	private String[] authorities;
+	private String role;	
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	private Profession profession;
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	private Domain domain;
 		
 //Communication
@@ -72,6 +83,16 @@ public class User implements Serializable {
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="follower")
 		private List<Followage> followings;
 		
+		public MailMessage getMailMessage() {
+			return mailMessage;
+		}
+
+
+		public void setMailMessage(MailMessage mailMessage) {
+			this.mailMessage = mailMessage;
+		}
+
+
 		@JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="publisher")
 		private List<Post> posts;
@@ -109,9 +130,6 @@ public class User implements Serializable {
 
 		@OneToMany(mappedBy="users")
 		private List<Program> programs;
-		
-		
-// getters and setters for user
 		public Long getUser_Id() {
 			return User_Id;
 		}
@@ -222,12 +240,12 @@ public class User implements Serializable {
 		}
 
 
-		public Role getRole() {
+		public String getRole() {
 			return role;
 		}
 
 
-		public void setRole(Role role) {
+		public void setRole(String role) {
 			this.role = role;
 		}
 
@@ -250,6 +268,120 @@ public class User implements Serializable {
 		public void setDomain(Domain domain) {
 			this.domain = domain;
 		}
+
+
+		public List<Followage> getFollowings() {
+			return followings;
+		}
+
+
+		public void setFollowings(List<Followage> followings) {
+			this.followings = followings;
+		}
+
+
+		public List<Post> getPosts() {
+			return posts;
+		}
+
+
+		public void setPosts(List<Post> posts) {
+			this.posts = posts;
+		}
+
+
+		public List<Message> getMessagessent() {
+			return messagessent;
+		}
+
+
+		public void setMessagessent(List<Message> messagessent) {
+			this.messagessent = messagessent;
+		}
+
+
+		public List<Message> getMessagesreceived() {
+			return messagesreceived;
+		}
+
+
+		public void setMessagesreceived(List<Message> messagesreceived) {
+			this.messagesreceived = messagesreceived;
+		}
+
+
+		public List<Comment> getCommentsPosted() {
+			return commentsPosted;
+		}
+
+
+		public void setCommentsPosted(List<Comment> commentsPosted) {
+			this.commentsPosted = commentsPosted;
+		}
+
+
+		public List<Like> getLikes() {
+			return likes;
+		}
+
+
+		public void setLikes(List<Like> likes) {
+			this.likes = likes;
+		}
+
+
+		public Set<Complaint> getComplaints() {
+			return Complaints;
+		}
+
+
+		public void setComplaints(Set<Complaint> complaints) {
+			Complaints = complaints;
+		}
+
+
+		public Set<Feedback> getFeedbacks() {
+			return Feedbacks;
+		}
+
+
+		public void setFeedbacks(Set<Feedback> feedbacks) {
+			Feedbacks = feedbacks;
+		}
+
+
+		public List<Invitation> getInvitations() {
+			return invitations;
+		}
+
+
+		public void setInvitations(List<Invitation> invitations) {
+			this.invitations = invitations;
+		}
+
+
+		public List<Trip> getTrip() {
+			return trip;
+		}
+
+
+		public void setTrip(List<Trip> trip) {
+			this.trip = trip;
+		}
+
+
+		public List<Program> getPrograms() {
+			return programs;
+		}
+
+
+		public void setPrograms(List<Program> programs) {
+			this.programs = programs;
+		}
+		
+		
+// getters and setters for user
+		
 }
 	
 

@@ -34,8 +34,8 @@ public class MessageService implements IMessageService {
 	public void addMessage(Message m, long ids, long idr) {
 		Message message=new Message();
 		boolean test=false;
-		m.setSender(userRepository.getById(ids));
-		m.setReceiver(userRepository.getById(idr));
+		m.setSender(userRepository.findById(ids).get());
+		m.setReceiver(userRepository.findById(idr).get());
 		for(Message msg : messageRepository.findAll()){
 			if (msg.getReceiver().equals(m.getReceiver()) || msg.getSender().equals(m.getReceiver())){
 				message=msg;

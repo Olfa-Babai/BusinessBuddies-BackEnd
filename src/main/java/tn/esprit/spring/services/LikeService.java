@@ -41,7 +41,7 @@ public class LikeService implements ILikeService {
 			}
 		}
 		like.setPost(postRepository.getById(idp));
-		like.setLiker(userRepository.getById(idu));
+		like.setLiker(userRepository.findById(idu).get());
 		likeRepository.save(like);
 	}
 
@@ -74,7 +74,7 @@ public class LikeService implements ILikeService {
 	
 	@Override
 	public Theme mostLikedPostsTheme(long idu){
-		User u=userRepository.getById(idu);
+		User u=userRepository.findById(idu).get();
 		HashMap<Theme,Integer> comp=new HashMap<Theme,Integer>();
 		Theme[] themes=Theme.values();
 		for(Theme t: themes){

@@ -37,4 +37,38 @@ public class Like implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private User liker;
+
+	public int getIdlike() {
+		return idlike;
+	}
+
+	public void setIdlike(int idlike) {
+		this.idlike = idlike;
+	}
+
+	public TypeLike getType() {
+		return type;
+	}
+
+	public void setType(TypeLike type) {
+		this.type = type;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public User getLiker() {
+		return liker;
+	}
+
+	public void setLiker(User liker) {
+		this.liker = liker;
+	}
+	
+	
 }

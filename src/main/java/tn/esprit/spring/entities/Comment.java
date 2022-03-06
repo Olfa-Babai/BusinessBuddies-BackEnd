@@ -41,4 +41,46 @@ public class Comment implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private User commenter;
+
+	public int getIdcomment() {
+		return idcomment;
+	}
+
+	public void setIdcomment(int idcomment) {
+		this.idcomment = idcomment;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public Date getPublished() {
+		return published;
+	}
+
+	public void setPublished(Date published) {
+		this.published = published;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public User getCommenter() {
+		return commenter;
+	}
+
+	public void setCommenter(User commenter) {
+		this.commenter = commenter;
+	}
+	
+	
 }

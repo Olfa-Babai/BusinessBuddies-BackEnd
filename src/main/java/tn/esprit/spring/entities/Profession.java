@@ -1,12 +1,14 @@
 package tn.esprit.spring.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,14 +36,8 @@ public class Profession {
 	@Column
     private String ProfessionName;
 
-
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	@OneToOne(mappedBy="profession")
-	private User user;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="profession")
+	private List<User> user;
 	}
  

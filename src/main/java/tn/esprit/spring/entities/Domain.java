@@ -1,10 +1,13 @@
 package tn.esprit.spring.entities;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -34,16 +37,18 @@ public class Domain {
     private String DomainName;
 
 	
-	@OneToOne(mappedBy="domain")
-	private User user;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="domain")
+	private List<User> user;
 
 
-	public User getUser() {
+	public List<User> getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(List<User> user) {
 		this.user = user;
 	}
+
+
 
 
 	
