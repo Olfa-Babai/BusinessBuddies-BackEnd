@@ -29,12 +29,12 @@ public class Like implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int idlike;
 	TypeLike type;
-	
-	// @JsonIgnore 
-	// @OneToOne User liker;
 
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Post post;
 	
+	@JsonIgnore
+	@ManyToOne
+	private User liker;
 }

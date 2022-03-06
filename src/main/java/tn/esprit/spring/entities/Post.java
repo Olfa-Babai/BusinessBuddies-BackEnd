@@ -39,7 +39,7 @@ public class Post implements Serializable {
 	private List<Comment> comments;
 	
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private User publisher;
 	
 }
