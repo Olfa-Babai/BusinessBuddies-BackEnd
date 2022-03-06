@@ -1,10 +1,8 @@
 package tn.esprit.spring.services;
 
-import java.util.HashMap;
 import java.util.List;
 
 import tn.esprit.spring.entities.Like;
-import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.Theme;
 
 public interface ILikeService {	
