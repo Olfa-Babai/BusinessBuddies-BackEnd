@@ -41,6 +41,54 @@ public class Complaint  implements Serializable {
 		return "Complaint [idC=" + idC + ", nameC=" + nameC + ", description=" + description + ", processing="
 				+ processing + ", Blocked=" + Blocked + ", Users=" + Users + "]";
 	}
+
+	public int getIdC() {
+		return idC;
+	}
+
+	public void setIdC(int idC) {
+		this.idC = idC;
+	}
+
+	public String getNameC() {
+		return nameC;
+	}
+
+	public void setNameC(String nameC) {
+		this.nameC = nameC;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Processing getProcessing() {
+		return processing;
+	}
+
+	public void setProcessing(Processing processing) {
+		this.processing = processing;
+	}
+
+	public boolean isBlocked() {
+		return Blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		Blocked = blocked;
+	}
+
+	public User getUsers() {
+		return Users;
+	}
+
+	public void setUsers(User users) {
+		Users = users;
+	}
 	
 
 	

@@ -28,6 +28,48 @@ public class Feedback implements Serializable {
     private String nameF;
 	@Column(nullable=false, length=500)
     private String comment;
+	public int getIdF() {
+		return idF;
+	}
+	public void setIdF(int idF) {
+		this.idF = idF;
+	}
+	public String getNameF() {
+		return nameF;
+	}
+	public void setNameF(String nameF) {
+		this.nameF = nameF;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public FeedbackType getType() {
+		return type;
+	}
+	public void setType(FeedbackType type) {
+		this.type = type;
+	}
+	public FeedBacksKinds getKind() {
+		return kind;
+	}
+	public void setKind(FeedBacksKinds kind) {
+		this.kind = kind;
+	}
+	public boolean isBlocked() {
+		return Blocked;
+	}
+	public void setBlocked(boolean blocked) {
+		Blocked = blocked;
+	}
+	public User getUsers() {
+		return Users;
+	}
+	public void setUsers(User users) {
+		Users = users;
+	}
 	@Column
 	@Enumerated(EnumType.STRING)
     private FeedbackType type ;

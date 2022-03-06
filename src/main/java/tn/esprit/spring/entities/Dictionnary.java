@@ -23,4 +23,18 @@ public class Dictionnary implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int iddictionnary;
 	private String word;
+	public int getIddictionnary() {
+		return iddictionnary;
+	}
+	public void setIddictionnary(int iddictionnary) {
+		this.iddictionnary = iddictionnary;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
+	
 }

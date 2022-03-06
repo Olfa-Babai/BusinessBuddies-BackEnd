@@ -101,7 +101,7 @@ public class PostService implements IPostService {
 	@Override
 	public List<Post> recommendedPosts(long idu){
 		List<Post> posts=new ArrayList<Post>();
-		User u=userRepository.getById(idu);
+		User u=userRepository.findById(idu).get();
 		Theme theme1=followageService.bestRatedThemeUser(idu).getTheme();
 		Theme theme2=likeService.mostLikedPostsTheme(idu);
 		

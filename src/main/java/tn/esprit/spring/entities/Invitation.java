@@ -32,6 +32,54 @@ public class Invitation implements Serializable{
 	
 	@ManyToMany
 	private List<Invitation> users;
+
+	public long getIdInvitation() {
+		return idInvitation;
+	}
+
+	public void setIdInvitation(long idInvitation) {
+		this.idInvitation = idInvitation;
+	}
+
+	public String getContenu() {
+		return contenu;
+	}
+
+	public void setContenu(String contenu) {
+		this.contenu = contenu;
+	}
+
+	public String getCodeAcces() {
+		return codeAcces;
+	}
+
+	public void setCodeAcces(String codeAcces) {
+		this.codeAcces = codeAcces;
+	}
+
+	public typeInvitation getTypeInvitation() {
+		return typeInvitation;
+	}
+
+	public void setTypeInvitation(typeInvitation typeInvitation) {
+		this.typeInvitation = typeInvitation;
+	}
+
+	public invitationStatus getInvitationStatus() {
+		return invitationStatus;
+	}
+
+	public void setInvitationStatus(invitationStatus invitationStatus) {
+		this.invitationStatus = invitationStatus;
+	}
+
+	public List<Invitation> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Invitation> users) {
+		this.users = users;
+	}
 	
 	
 }
