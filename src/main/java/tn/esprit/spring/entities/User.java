@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,17 +54,27 @@ public class User implements Serializable {
 	private int CIN ;
 	@Column(length=50)
 	private String ServiceType;
+	public String[] getAuthorities() {
+		return authorities;
+	}
+
+
+	public void setAuthorities(String[] authorities) {
+		this.authorities = authorities;
+	}
+
+
 	@Column
 	private int NumberOfEmployees ;
 	@Column(nullable=false)
 	private String Password;
-	@Enumerated(EnumType.STRING)
-	private Role role;	
+	private String[] authorities;
+	private String role;	
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	private Profession profession;
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	private Domain domain;
 		
 //Communication
@@ -222,12 +233,12 @@ public class User implements Serializable {
 		}
 
 
-		public Role getRole() {
+		public String getRole() {
 			return role;
 		}
 
 
-		public void setRole(Role role) {
+		public void setRole(String role) {
 			this.role = role;
 		}
 
