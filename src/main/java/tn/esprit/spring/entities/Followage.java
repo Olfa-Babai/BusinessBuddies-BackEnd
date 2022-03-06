@@ -1,17 +1,13 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,8 +24,8 @@ public class Followage implements Serializable {
 	private int idfollowage;
 	@Enumerated(EnumType.STRING)
 	private Theme theme;
-	
+	private int rating;
 	 @JsonIgnore
-	 @ManyToMany
-	 private List<User> followers;
+	 @ManyToOne
+	 private User follower;
 }

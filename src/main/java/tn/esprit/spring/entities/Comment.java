@@ -1,11 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,13 +30,15 @@ public class Comment implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idcomment;
 	private String body;
-	private int likes;
-	private int dislikes;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(style="yyyy-MM-dd")
 	private Date published;
 	
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Post post;
+	
+	@JsonIgnore
+	@ManyToOne
+	private User commenter;
 }
