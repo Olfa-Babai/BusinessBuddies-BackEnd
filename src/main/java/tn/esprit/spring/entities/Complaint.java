@@ -21,18 +21,27 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Complaint  implements Serializable {
-@Id
+    @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idC;
-	@Column
+    @Column(nullable=false, length=50)
     private String nameC;
-	@Column
+    @Column(nullable=false, length=500)
     private String description;
 	@Column
 	@Enumerated(EnumType.STRING)
     private Processing processing ;
+	@Column 
+	private boolean Blocked ;
 	@ManyToOne
 	User Users;
+	
+	@Override
+	public String toString() {
+		return "Complaint [idC=" + idC + ", nameC=" + nameC + ", description=" + description + ", processing="
+				+ processing + ", Blocked=" + Blocked + ", Users=" + Users + "]";
+	}
+	
 
 	
 }

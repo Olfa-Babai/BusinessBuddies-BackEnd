@@ -24,16 +24,22 @@ public class Feedback implements Serializable {
   @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idF;
-	@Column
+  @Column(nullable=false, length=50)
     private String nameF;
-	@Column
+	@Column(nullable=false, length=500)
     private String comment;
 	@Column
 	@Enumerated(EnumType.STRING)
     private FeedbackType type ;
-	
+	@Enumerated(EnumType.STRING)
+    private FeedBacksKinds kind ;
+	@Column 
+	private boolean Blocked ;
 	@ManyToOne
 	User Users;
+	
+	
+	
 }
 
 
