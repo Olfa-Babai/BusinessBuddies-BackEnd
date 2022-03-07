@@ -55,7 +55,7 @@ public class ComplaintSERVICE implements IComplaintSERVICE{
 	public String responseByMail(int idC , String text) {
 		Complaint complaint = complaintRepository.findById(idC).orElse(null);
 		String email =complaint.getUsers().getEmail();
-		String body ="Good Morning "+complaint.getUsers().getUserFirstName()+" "+complaint.getUsers().getUserName()+" ," + text + "Cordialement." + "\r\n" + 
+		String body ="Good Morning "+complaint.getUsers().getUsername()+" "+complaint.getUsers().getUsername()+" ," + text + "Cordialement." + "\r\n" + 
 				"business buddies." ;
 		String subject="Respond to your complaint";
 		mail.Sendd(email,subject,body);

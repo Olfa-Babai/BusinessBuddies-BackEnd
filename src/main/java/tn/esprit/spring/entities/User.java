@@ -37,12 +37,11 @@ import lombok.Setter;
 @Entity
 public class User implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Long User_Id ;
 	@Column(nullable=false, length=20)
-	private String UserFirstName;
-	private String UserName;
+	private String username;
 	@Temporal(TemporalType.DATE)
 	private Date DateNaissance;
 	@Column(nullable=false, unique=true)
@@ -64,8 +63,8 @@ public class User implements Serializable {
 	}
 
 
-	@Column
-	private int NumberOfEmployees ;
+
+
 	@Column(nullable=false)
 	private String Password;
 	private String[] authorities;
@@ -76,7 +75,8 @@ public class User implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Domain domain;
-		
+
+	
 //Communication
 		private MailMessage mailMessage;
 		@JsonIgnore
@@ -140,23 +140,19 @@ public class User implements Serializable {
 		}
 
 
-		public String getUserFirstName() {
-			return UserFirstName;
+
+		public String getUsername() {
+			return username;
 		}
 
 
-		public void setUserFirstName(String userFirstName) {
-			UserFirstName = userFirstName;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
 
-		public String getUserName() {
-			return UserName;
-		}
-
-
-		public void setUserName(String userName) {
-			UserName = userName;
+		public void setServiceType(String serviceType) {
+			ServiceType = serviceType;
 		}
 
 
@@ -212,21 +208,6 @@ public class User implements Serializable {
 
 		public String getServiceType() {
 			return ServiceType;
-		}
-
-
-		public void setServiceType(String serviceType) {
-			ServiceType = serviceType;
-		}
-
-
-		public int getNumberOfEmployees() {
-			return NumberOfEmployees;
-		}
-
-
-		public void setNumberOfEmployees(int numberOfEmployees) {
-			NumberOfEmployees = numberOfEmployees;
 		}
 
 
@@ -379,8 +360,6 @@ public class User implements Serializable {
 			this.programs = programs;
 		}
 		
-		
-// getters and setters for user
 		
 }
 	

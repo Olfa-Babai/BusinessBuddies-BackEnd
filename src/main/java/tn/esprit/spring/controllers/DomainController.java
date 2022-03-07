@@ -34,17 +34,7 @@ import tn.esprit.spring.services.IDomainService;
 		@Autowired
 			DomainServiceImp Domainservice;
 
-		/*
-		//AddDomain
 		
-		//http://localhost:8089/AjouterDomain
-				@PostMapping("/AjouterDomain")
-				@ResponseBody
-					public void AjouterDomain(@ RequestBody Domain domain)
-						{
-					Domainservice.AddDomain(domain);
-						}
-		*/
 				
 		//Update
 
@@ -94,31 +84,63 @@ import tn.esprit.spring.services.IDomainService;
 			}
 		
 		
+		/*
+		//AddDomain
 		
-			//http://localhost:8089/add-Domain
+		//http://localhost:8089/AjouterDomain
+				@PostMapping("/AjouterDomain")
+				@ResponseBody
+					public String AjouterDomain(@ RequestBody Domain domain)
+						{
+						Domain d;
+				
+				if (TestVald(domain) == false ){
+					Domainservice.addDomain(domain);
+					return  "Domain sucessfully added";
+				}
+				return "Domain already exists !";}
+				
+					
+						
+						public boolean TestVald(Domain domain){
+				Domain d = (Domain) DomainService.findByDomainUser(domain.getDomainName());
+				if (domain == null ) 
+					
+				{	return false ;	}
+				
+				return true ;
+						}
+		*/
+		
+			//http://localhost:8089/SPRING/add-Domain
 			@PostMapping("/add-Domain")
 			@ResponseBody
-			public String addDomain(@RequestBody Domain c)
+			public String addDomain(@RequestBody Domain domain)
 			{
-				Domain domain;
-				if (TestVald(c) == false ){
-					Domainservice.addDomain(c);
+				Domain d;
+				
+				if (TestVald(domain) == false ){
+					Domainservice.addDomain(domain);
 					return  "Domain sucessfully added";
 				}
 				return "Domain already exists !";
 			}	
 			
+			
 	
-			public boolean TestVald(Domain c){
-				Domain domain = (Domain) DomainService.findByDomainUser(c.getDomainName());
-				if (domain == null ){
-					return false;
-				}
+			public boolean TestVald(Domain domain){
+				Domain d = (Domain) DomainService.findByDomainUser(domain.getDomainName());
+				if (domain == null ) 
+					
+				{	return false ;	}
+				
 				return true ;
 				
 			}
 			
-}
+	
+						}
+
 		
 		
 		

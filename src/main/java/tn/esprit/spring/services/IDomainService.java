@@ -16,4 +16,5 @@ public interface IDomainService
 		public void DeleteDomain (int ID_Domain);
 		Domain retrieveDomain(int ID_Domain);
 		List<User> findByDomainUser(String DomainName);
+		String GetDomain(String Domain);
 	}

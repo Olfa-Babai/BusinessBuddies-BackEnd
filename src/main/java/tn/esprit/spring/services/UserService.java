@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.BaseColor;
@@ -30,6 +31,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.entities.Profession;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.entities.UserPrincipal;
@@ -41,7 +44,7 @@ public class UserService implements IUserService ,UserDetailsService{
 @Autowired
 private UserRepository userRepository;
 
-//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 
 public void setUserRepository(UserRepository userRepository) {
@@ -67,11 +70,9 @@ return u;
 //Update infos
 
 @Override
-	public void updateuser(Long User_Id, String UserFirstName, String UserName, String email, String Address,
-			Integer PhoneNumber, String password) {
+	public void updateuser(Long User_Id, String username, String email, String Address,Integer PhoneNumber, String password) {
 		User user = userRepository.findById(User_Id).orElse(null);
-		user.setUserFirstName(UserFirstName);
-		user.setUserName(UserName);
+		user.setUsername(username);
 		user.setAddress(Address);
 		user.setEmail(email);
 		user.setPhoneNumber(PhoneNumber);
@@ -237,7 +238,7 @@ return u;
 			table2.addCell(User_Id1);
 
 			PdfPCell UserName1 = new PdfPCell(
-					new Paragraph(String.valueOf(e.getUserName()), tableHeader));
+					new Paragraph(String.valueOf(e.getUsername()), tableHeader));
 			UserName1.setBorderColor(BaseColor.BLACK);
 			UserName1.setPaddingLeft(10);
 			UserName1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -318,6 +319,8 @@ return u;
 		}
 	}
 
+
+
 @Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	User user = userRepository.findByEmail(username).orElse(null);
@@ -335,7 +338,10 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
     }
 }
 
+
 }
+
+
 
 
 

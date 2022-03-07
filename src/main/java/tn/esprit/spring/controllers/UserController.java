@@ -2,6 +2,7 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.entities.Profession;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.UserRepository;
 import tn.esprit.spring.services.IUserService;
@@ -27,6 +30,9 @@ public class UserController {
 	
 	@Autowired
 	UserRepository repo;
+	
+	/*@Autowired    
+	private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
 	@PostMapping("/registration")
 	@ResponseBody
@@ -46,11 +52,11 @@ public class UserController {
 //Update infos
 
 //http://localhost:8089/user/updateuser/
-				@PutMapping("/updateuser/{User_Id}/{UserFirstName}/{UserName}/{email}/{Address}/{PhoneNumber}/{password}/")
+				@PutMapping("/updateuser/{User_Id}/")
 				@ResponseBody
-				public void updateuser(@PathVariable ("User_Id") Long User_Id,@PathVariable ("UserFirstName") String UserFirstName ,@PathVariable ("UserName") String UserName,@PathVariable ("email") String email,@PathVariable ("Address") String Address,@PathVariable ("password") String password,@PathVariable ("PhoneNumber") Integer PhoneNumber){
+				public void updateuser(@PathVariable ("User_Id") Long User_Id,@PathVariable ("username") String username,@PathVariable ("email") String email,@PathVariable ("Address") String Address,@PathVariable ("password") String password,@PathVariable ("PhoneNumber") Integer PhoneNumber){
 					
-				userService.updateuser(User_Id, UserFirstName, UserName, Address, email, PhoneNumber, password);
+				userService.updateuser(User_Id, username , Address, email, PhoneNumber, password);
 					
 				}
 
@@ -75,7 +81,7 @@ public class UserController {
 	public void userpdf (@PathVariable("user_Id") int id) {
 		userService.userpdf(id);
 	}
-	
+	 //Consulter liste  employees
 	@GetMapping(value = "/list_employees")
 	@ResponseBody
 	public List<User> listEmployee(){

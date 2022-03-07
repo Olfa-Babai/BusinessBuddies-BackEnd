@@ -20,7 +20,7 @@ public interface UserRepository extends CrudRepository<User,Long>
 	//Filtre 
 	
 	@Query("SELECT f FROM User f WHERE f.email LIKE %?1%" //to search
-            + " OR f.UserFirstName LIKE %?1%"
+            + " OR f.username LIKE %?1%"
             + " OR f.domain LIKE %?1%")
            
     public List<User> search(String keyword);

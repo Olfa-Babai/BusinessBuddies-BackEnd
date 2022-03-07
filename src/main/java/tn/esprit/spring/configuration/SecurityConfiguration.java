@@ -30,6 +30,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private UserDetailsService userDetailsService;
+    
+    /*@Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }*/
+    
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -44,7 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
+ 
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
