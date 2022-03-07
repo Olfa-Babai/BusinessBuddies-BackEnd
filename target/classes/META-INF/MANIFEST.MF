@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: BusinessBuddies
 Implementation-Version: 1.0
-Built-By: DELL
+Built-By: pc
 Implementation-Vendor-Id: tn.esprit.spring
-Build-Jdk: 1.8.0_144
+Build-Jdk: 1.8.0_202
 Implementation-URL: https://spring.io/projects/spring-boot/BusinessBud
  dies
 Created-By: Maven Integration for Eclipse
