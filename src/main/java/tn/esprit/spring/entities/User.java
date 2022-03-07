@@ -36,7 +36,7 @@ import lombok.Setter;
 @Entity
 public class User implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Long User_Id ;
 	@Column(nullable=false, length=20)

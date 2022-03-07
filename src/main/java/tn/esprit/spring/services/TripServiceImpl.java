@@ -71,7 +71,7 @@ public class TripServiceImpl implements TripService{
 			User u = userRepository.findById (User_Id).orElse(null);
 			Trip trip1=Triprepo.findById(idTrip).orElse(null);
 				
-			HashSet <Trip> trip = (HashSet<Trip>) Triprepo.findTripPartner(u.getDomain().getDomainName(), trip1.getDate(),trip1.getDestination());
+			HashSet <Trip> trip = Triprepo.findTripPartner(u.getDomain().getDomainName(), trip1.getDate(),trip1.getDestination());
 			HashSet <User> partners =new HashSet<User>();
 			for (Trip i:trip)
 					{
@@ -88,7 +88,33 @@ public class TripServiceImpl implements TripService{
 			return Triprepo.FindTripByDestination(destination);
 		}
 
+	
+	//////////////// Affectation trip to user 
+	@Override
+	public void AddTripToUser(Integer idTrip, Long User_Id) 
+		{
+			Trip t =Triprepo.findById(idTrip).orElse(null);
+			User u = userRepository.findById(User_Id).orElse(null);
+			t.getUsers().add(u);
+			Triprepo.save(t);
+		}
+	
+	
+	//////////////// Recherche avancée 
+	@Override
+	public List<Trip> GetTrip(String destination) 
+		{
+			return Triprepo.GetTrip(destination);
+		}
 
+	
+	//////////////// Statistiques 
+	@Override
+	public List<Object[]> statistic() {
+		return Triprepo.countTotalTypeByYear();
+	}
+
+	
 	
 
 	
