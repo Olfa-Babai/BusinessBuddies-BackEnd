@@ -41,7 +41,7 @@ public class User implements Serializable {
 	private Long User_Id ;
 	@Column(nullable=false, length=20)
 	private String UserFirstName;
-	private String UserName;
+	private String username;
 	@Temporal(TemporalType.DATE)
 	private Date DateNaissance;
 	@Column(nullable=false, unique=true)
@@ -150,12 +150,12 @@ public class User implements Serializable {
 
 
 		public String getUserName() {
-			return UserName;
+			return username;
 		}
 
 
 		public void setUserName(String userName) {
-			UserName = userName;
+			username = userName;
 		}
 
 

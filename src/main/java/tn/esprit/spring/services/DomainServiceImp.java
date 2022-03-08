@@ -48,7 +48,19 @@ public void UpdateDomain(int ID_Domain, String DomainName)
 	Domrepo.save(domain);
 	}
 
+	/*	//ADD
 
+		@Override
+		public void addDomain(Domain Domain){
+			 Domrepo.save(Domain);
+		}
+		
+		@Override
+		public String GetDomain(String Domain){
+			
+			return Domrepo.findByDomainName(Domain);
+			
+		}*/
 //Delete
 public void DeleteDomain(int ID_Domain) 
 	{
@@ -77,6 +89,20 @@ public List<User> findByDomainUser(String DomainName) {
 		}
 	}
 	return newUsers;
+}
+
+
+@Override
+public String GetDomain(String Domain) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+@Override
+public List<Object[]> statistic() {
+	
+	return Domrepo.countTotalTypeByYear();
 }
 
 }

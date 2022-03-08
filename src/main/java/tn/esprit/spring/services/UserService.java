@@ -1,6 +1,10 @@
 package tn.esprit.spring.services;
 
-import static tn.esprit.spring.constant.UserImplConstant.NO_USER_FOUND_BY_USERNAME;
+
+
+
+
+
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,10 +16,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.BaseColor;
@@ -30,18 +30,19 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.User;
-import tn.esprit.spring.entities.UserPrincipal;
+
 import tn.esprit.spring.repositories.UserRepository;
+
 @Transactional
 @Qualifier("userDetailsService")
 @Service
-public class UserService implements IUserService ,UserDetailsService{
+public class UserService implements IUserService {
 @Autowired
 private UserRepository userRepository;
 
-//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 
 public void setUserRepository(UserRepository userRepository) {
@@ -51,8 +52,9 @@ public void setUserRepository(UserRepository userRepository) {
 @Override
 public List<User> listEmployee(){
 	List<User> employees= new ArrayList<User>();
-	for(User u : userRepository.findAll()){
-		if(u.getRole().equals(Role.ROLE_EMPLOYEE)){
+	for(User u : userRepository.findAll())
+	{
+		if(u.getRole().equals(Role.Employee)){
 			employees.add(u);
 		}
 	}
@@ -61,17 +63,16 @@ public List<User> listEmployee(){
 
 public User saveUser(User User) {
 User u=userRepository.save(User);
+//mailling("marwa.hadidan@esprit.tn","Votre reclamation a ete envoyer nous repondorons après 72hrs" );
 return u; 
          }
 
 //Update infos
 
 @Override
-	public void updateuser(Long User_Id, String UserFirstName, String UserName, String email, String Address,
-			Integer PhoneNumber, String password) {
+	public void updateuser(Long User_Id, String username, String email, String Address,Integer PhoneNumber, String password) {
 		User user = userRepository.findById(User_Id).orElse(null);
-		user.setUserFirstName(UserFirstName);
-		user.setUserName(UserName);
+		user.setUserFirstName(username);
 		user.setAddress(Address);
 		user.setEmail(email);
 		user.setPhoneNumber(PhoneNumber);
@@ -319,23 +320,25 @@ return u;
 	}
 
 @Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	User user = userRepository.findByEmail(username).orElse(null);
-    if (user == null) {
-       // LOGGER.error(NO_USER_FOUND_BY_USERNAME + username);
-        throw new UsernameNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
-    } else {
-       // validateLoginAttempt(user);
-       // user.setLastLoginDateDisplay(user.getLastLoginDate());
-       // user.setLastLoginDate(new Date());
-    	userRepository.save(user);
-        UserPrincipal userPrincipal = new UserPrincipal(user);
-      //  LOGGER.info(FOUND_USER_BY_USERNAME + username);
-        return userPrincipal;
-    }
+public User findByUsername(String username) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
+@Override
+public void delete(Long user_Id) {
+	userRepository.deleteById(user_Id);
+	// TODO Auto-generated method stub
+	
 }
+
+
+
+
+
+}
+
+
 
 
 

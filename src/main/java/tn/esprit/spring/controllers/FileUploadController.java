@@ -19,7 +19,7 @@ public class FileUploadController {
 	@Value("${file.upload-dir}")
 	String FILE_DIRECTORY;
 	
-	//http://localhost:8089/SpringMVC/uploadFile
+	//http://localhost:8089/SPRING/uploadFile
 	@PostMapping("/uploadFile")
 	public ResponseEntity<Object> fileUpload(@RequestParam("File") MultipartFile file) throws IOException{
 		File myFile = new File(FILE_DIRECTORY+file.getOriginalFilename());

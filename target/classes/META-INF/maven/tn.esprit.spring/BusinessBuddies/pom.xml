@@ -28,6 +28,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -75,28 +76,12 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>3.10.0</version>
-		</dependency>
-		        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        
 		
 		<dependency>
-
-<groupId>io.springfox</groupId>
-<artifactId> springfox-boot-starter </artifactId>
-<version> 3.0.0 </version>
-</dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId> springfox-boot-starter </artifactId>
+			<version> 3.0.0 </version>
+			</dependency>
 
 		<dependency>
 			<groupId>com.itextpdf</groupId>

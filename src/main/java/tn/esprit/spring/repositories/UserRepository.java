@@ -15,12 +15,14 @@ import tn.esprit.spring.entities.User;
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> 
   {
-	Optional<User> findByEmail(String email);
+	
+	public Optional<User> findByUsername(String UserName);
+	public Optional<User> findByEmail(String email);
 	
 	//Filtre 
 	
 	@Query("SELECT f FROM User f WHERE f.email LIKE %?1%" //to search
-            + " OR f.UserFirstName LIKE %?1%"
+            + " OR f.username LIKE %?1%"
             + " OR f.domain LIKE %?1%")
            
     public List<User> search(String keyword);
@@ -29,6 +31,7 @@ public interface UserRepository extends CrudRepository<User,Long>
 	//Recherche
    @Query("SELECT f FROM User f  where f.domain = :domain")
     public List<User> FindUserBydomain(@Param("domain") String domain);
-	
+   
+  
   }
 

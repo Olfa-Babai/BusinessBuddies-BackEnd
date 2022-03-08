@@ -24,6 +24,7 @@ import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IDomainService;
 import tn.esprit.spring.services.IUserService;*/
 import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.repositories.DomainRepository;
 import tn.esprit.spring.services.DomainServiceImp;
 import tn.esprit.spring.services.IDomainService;
 
@@ -33,18 +34,14 @@ import tn.esprit.spring.services.IDomainService;
 	{
 		@Autowired
 			DomainServiceImp Domainservice;
+		@Autowired
+		DomainRepository myrepo;
 
-		/*
-		//AddDomain
-		
-		//http://localhost:8089/AjouterDomain
-				@PostMapping("/AjouterDomain")
-				@ResponseBody
-					public void AjouterDomain(@ RequestBody Domain domain)
-						{
-					Domainservice.AddDomain(domain);
-						}
-		*/
+		//STAT
+		@GetMapping("/getDomainStat")
+	    public  List<Object[]> statistic  () {
+			return Domainservice.statistic();
+		}
 				
 		//Update
 
@@ -95,30 +92,55 @@ import tn.esprit.spring.services.IDomainService;
 		
 		
 		
-			//http://localhost:8089/add-Domain
+		//AddDomain
+		
+		//http://localhost:8089/AjouterDomain
+				@PostMapping("/AjouterDomain")
+				@ResponseBody
+					public String AjouterDomain(@ RequestBody Domain domain)
+					{
+					List<Domain> list = (List<Domain>) myrepo.findAll();
+					for (Domain domain2 : list) {
+						if(domain2.getDomainName().equals(domain.getDomainName())){
+							return "deja exist";
+						}
+					}
+					Domainservice.addDomain(domain);
+					return "true";
+					
+					
+						}
+		
+		
+			/*//http://localhost:8089/SPRING/add-Domain
 			@PostMapping("/add-Domain")
 			@ResponseBody
-			public String addDomain(@RequestBody Domain c)
+			public String addDomain(@RequestBody Domain domain)
 			{
-				Domain domain;
-				if (TestVald(c) == false ){
-					Domainservice.addDomain(c);
+				Domain d;
+				
+				if (TestVald(domain) == false ){
+					Domainservice.addDomain(domain);
 					return  "Domain sucessfully added";
 				}
 				return "Domain already exists !";
 			}	
 			
-	
-			public boolean TestVald(Domain c){
-				Domain domain = (Domain) DomainService.findByDomainUser(c.getDomainName());
-				if (domain == null ){
-					return false;
-				}
+			
+	*/
+			public boolean TestVald(Domain domain){
+				Domain d = (Domain) DomainService.findByDomainUser(domain.getDomainName());
+				if (domain == null ) 
+					
+				{	return false ;	}
+				
 				return true ;
 				
 			}
 			
-}
+	
+						}
+
 		
 		
 		

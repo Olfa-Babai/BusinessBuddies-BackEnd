@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Domain;
 import tn.esprit.spring.entities.Profession;
+import tn.esprit.spring.repositories.DomainRepository;
+import tn.esprit.spring.repositories.ProfessionRepository;
 import tn.esprit.spring.services.IDomainService;
 import tn.esprit.spring.services.IProfessionService;
 
@@ -24,6 +26,8 @@ public class ProfessionController
 	{
 		@Autowired
 			IProfessionService Professionservice;
+		@Autowired
+		ProfessionRepository myrepo;
 /*
 		//AddProfession
 		
@@ -81,20 +85,41 @@ public class ProfessionController
 			return listProfessions;
 			}
 		
+		/*//AddDomain
 		
+		//http://localhost:8089/AjouterDomain
+				@PostMapping("/AjouterDomain")
+				@ResponseBody
+					public String AjouterDomain(@ RequestBody Domain domain)
+					{
+					List<Domain> list = (List<Domain>) myrepo.findAll();
+					for (Domain domain2 : list) {
+						if(domain2.getDomainName().equals(domain.getDomainName())){
+							return "deja exist";
+						}
+					}
+					Domainservice.addDomain(domain);
+					return "true";
+					
+					
+						}*/
 		
 			//http://localhost:8089/add-Profession
-			@PostMapping("/add-Profession")
+			@PostMapping("/AjouterProfession")
 			@ResponseBody
-			public String addProfession(@RequestBody Profession c)
+			public String addProfession(@RequestBody Profession profession)
 			{
-				Profession profession;
-				if (TestVald(c) == false ){
-					Professionservice.addProfession(c);
-					return  "Profession sucessfully added";
+				List<Profession> list = (List<Profession>) myrepo.findAll();
+				for (Profession Profession2 : list) {
+					if(Profession2.getProfessionName().equals(profession.getProfessionName())){
+						return "deja exist";
+					}
 				}
-				return "Profession already exists !";
-			}	
+				Professionservice.addProfession(profession);
+				return "true";
+				
+				
+					}
 			
 	
 			public boolean TestVald(Profession c){

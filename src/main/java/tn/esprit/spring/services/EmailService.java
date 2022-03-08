@@ -1,23 +1,9 @@
 package tn.esprit.spring.services;
 
-import com.sun.mail.smtp.SMTPTransport;
 import org.springframework.stereotype.Service;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Date;
-import java.util.Properties;
-
-import static javax.mail.Message.RecipientType.CC;
-import static javax.mail.Message.RecipientType.TO;
-import static tn.esprit.spring.constant.EmailConstant.*;
-
 @Service
 public class EmailService {
-
+/*
     public void sendNewPasswordEmail(String firstName, String password, String email,String username) throws MessagingException {
         Message message = createEmail(firstName, password, email,username);
         SMTPTransport smtpTransport = (SMTPTransport) getEmailSession().getTransport(SIMPLE_MAIL_TRANSFER_PROTOCOL);
@@ -46,5 +32,5 @@ public class EmailService {
         properties.put(SMTP_STARTTLS_ENABLE, true);
         properties.put(SMTP_STARTTLS_REQUIRED, true);
         return Session.getInstance(properties, null);
-    }
+    }*/
 }
