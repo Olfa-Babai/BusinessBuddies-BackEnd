@@ -32,17 +32,16 @@ public class TripController {
 	@Autowired
 	TripService tripservice;
 	
-	//http://localhost:8089/SpringMVC/AddTrip
+	//http://localhost:8089/SPRING/AddTrip
 			@PostMapping("/AddTrip")
 			@ResponseBody
 			public void AddTrip (@Valid @RequestBody  Trip trip)
-				{
-				
+				{				
 					tripservice.AddTrip(trip);
 					
 				}
 				
-	//http://localhost:8089/SpringMVC/UpdateTrip/
+	//http://localhost:8089/SPRING/UpdateTrip/
 			@PutMapping("/UpdateTrip/{idTrip}/{destination}/{duree}/{tripobject}")
 			@ResponseBody
 			public void UpdateTrip (@PathVariable ("idTrip") int idTrip,@PathVariable("destination") String destination,@PathVariable ("duree") String duree,@PathVariable ("tripobject") String tripobject)
@@ -50,7 +49,7 @@ public class TripController {
 					tripservice.UpdateTrip(idTrip, duree, tripobject, destination);
 				}
 							
-	//http://localhost:8089/SpringMVC/DeleteTrip/2
+	//http://localhost:8089/SPRING/DeleteTrip
 			@DeleteMapping("/DeleteTrip/{idTrip}")
 			@ResponseBody
 			public void delete(@PathVariable("idTrip")int idTrip)
@@ -59,7 +58,7 @@ public class TripController {
 					tripservice.DeleteTrip(idTrip);
 				}	
 			
-	//http://localhost:8089/SpringMVC/AfficherTrips
+	//http://localhost:8089/SPRING/AfficherTrips
 	
 			@GetMapping("/AfficherTrips")
 			@ResponseBody
@@ -71,7 +70,7 @@ public class TripController {
 			
 	///////////////PDF		
 			
-	//http://localhost:8089/SpringMVC/pdfreporttrip
+	//http://localhost:8089/SPRING/pdfreporttrip
 			@RequestMapping(value = "/pdfreporttrip", method = RequestMethod.GET,
 		            produces = MediaType.APPLICATION_PDF_VALUE)
 		    public ResponseEntity<InputStreamResource> citiesReport() {
@@ -93,7 +92,7 @@ public class TripController {
 			
 ///////////////Algorithme de matching
 			
-	//http://localhost:8089/SpringMVC/findTripPartner
+	//http://localhost:8089/SPRING/findTripPartner
 		@GetMapping("/findTripPartner/{User_Id}/{idTrip}")
 		@ResponseBody
 		public HashSet<User>findTravelPartner (@PathVariable("User_Id") Long User_Id , @PathVariable("idTrip") Integer idTrip)
@@ -103,13 +102,38 @@ public class TripController {
 		
 ///////////////Recherche par destination
 	
-	//http://localhost:8089/SpringMVC/FindTripByDestination
+	//http://localhost:8089/SPRING/FindTripByDestination
 		@GetMapping("/FindTripByDestination/{destination}")
 		@ResponseBody
 		public List<Trip> FindTripByDestination(@PathVariable String destination) 
-		{
-			return  tripservice.FindTripByDestination(destination);
-		}
+			{
+				return  tripservice.FindTripByDestination(destination);
+			}
 		
+/////////////// Affecter Trip to user
+	//http://localhost:8089/SPRING/AddTripToUser
+		@PutMapping("/AddTripToUser/{idTrip}/{User_Id}")
+		@ResponseBody
+		public void AddTripToUser (@PathVariable("idTrip") int idTrip , @PathVariable ("User_Id") Long User_Id)
+			{
+				tripservice.AddTripToUser(idTrip, User_Id);
+			}
+		
+/////////////// Recherche avancée 		
+	//http://localhost:8089/SPRING/GetByDestination
+		@GetMapping("/GetByDestination/{destination}")
+		@ResponseBody
+		public List <Trip> GetTrip (@PathVariable ("destination") String destination)
+			{
+				return tripservice.GetTrip(destination);
+			}
+
+
+/////////////// Statistiques 
+	//http://localhost:8089/SPRING/getdestinationAndDomainnameStat
+		@GetMapping("/getdestinationAndDomainnameStat")
+	    public  List<Object[]> statistic () {
+			return tripservice.statistic();
+		}
 }
 
