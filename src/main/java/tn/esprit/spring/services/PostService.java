@@ -2,6 +2,7 @@ package tn.esprit.spring.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<Post> showPostsByUser(Post p, long idu) {
+	public List<Post> showPostsByUser( long idu) {
 		User u=userRepository.findById(idu).get();
 		return u.getPosts();
 	}
@@ -75,7 +76,7 @@ public class PostService implements IPostService {
 	public List<Post> searchPosts(String s, String t) {
 		List<Post> posts=new ArrayList<Post>();
 		for(Post p : showPostsByTheme(t)){
-			if (p.getBody().contains(s) || p.getTitle().contains(s)) {
+			if (p.getBody().toLowerCase().contains(s.toLowerCase()) || p.getTitle().toLowerCase().contains(s.toLowerCase())) {
 			posts.add(p);
 			}			
 		}
@@ -88,10 +89,11 @@ public class PostService implements IPostService {
 		for(Post p : showPostsByTheme(theme)){
 			if( !(p.getPublisher().equals(userRepository.findById(idu))) ){
 				for(Like l : p.getLikes()){
-					if (!(l.getLiker().equals(userRepository.findById(idu))))
+					if (l.getLiker().equals(userRepository.findById(idu)))
 					{
-						posts.add(p);
+						test=true;
 					}
+					if(test==false) posts.add(p);
 				}
 			}
 		}
@@ -105,14 +107,41 @@ public class PostService implements IPostService {
 		Theme theme1=followageService.bestRatedThemeUser(idu).getTheme();
 		Theme theme2=likeService.mostLikedPostsTheme(idu);
 		
-		if(theme1.equals(theme2)){
-			return postsNotLikedNotPosted(theme1.toString(), idu);
+		if(theme1.equals(theme2) && !(theme1.equals(null))){
+			posts=postsNotLikedNotPosted(theme1.toString(), idu);
+			posts=posts.stream().limit(2).collect(Collectors.toList());
 		}
-		else {
+		else if(!(theme2.equals(theme1)) &&!(theme1.equals(null)) && !(theme2.equals(null)) ) {
 			posts.addAll(postsNotLikedNotPosted(theme1.toString(), idu));
+			posts=posts.stream().limit(2).collect(Collectors.toList());
 			posts.addAll(postsNotLikedNotPosted(theme2.toString(), idu));
-			return posts;
+			posts=posts.stream().limit(4).collect(Collectors.toList());
 		}
+		else if( !(theme2.equals(theme1)) && (theme1.equals(null)) && !(theme2.equals(null)) ){
+			posts.addAll(postsNotLikedNotPosted(theme2.toString(), idu));
+			posts=posts.stream().limit(2).collect(Collectors.toList());	
+		}
+		else if( !(theme2.equals(theme1)) && !(theme1.equals(null)) && (theme2.equals(null)) ){
+			List<Post> postes=postRepository.findAll();
+			if(showPostsByUser(idu).equals(null)){
+				posts.addAll(postes);
+				posts=posts.stream().limit(2).collect(Collectors.toList());	
+			}else
+			postes.removeAll(showPostsByUser(idu));
+			posts.addAll(postes);
+			posts=posts.stream().limit(2).collect(Collectors.toList());	
+		}
+		else if((theme1.equals(null)) && (theme2.equals(null))) {
+			List<Post> postes=postRepository.findAll();
+			if(showPostsByUser(idu).equals(null)){
+				posts.addAll(postes);
+				posts=posts.stream().limit(2).collect(Collectors.toList());	
+			}else
+			postes.removeAll(showPostsByUser(idu));
+			posts.addAll(postes);
+			posts=posts.stream().limit(2).collect(Collectors.toList());	
+		}
+		return posts;
 	}
 	
 }

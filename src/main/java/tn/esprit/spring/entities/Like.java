@@ -30,11 +30,9 @@ public class Like implements Serializable {
 	int idlike;
 	TypeLike type;
 
-	@JsonIgnore
 	@ManyToOne
 	private Post post;
 	
-	@JsonIgnore
 	@ManyToOne
 	private User liker;
 

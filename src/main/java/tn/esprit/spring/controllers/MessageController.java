@@ -40,14 +40,14 @@ public class MessageController {
 	void addMessage(@RequestBody Message m,@PathVariable("ids") long ids,@PathVariable("idr") long idr){
 		m.setBody(dictionnaryService.wordsChecked(m.getBody()));
 		messageService.addMessage(m,ids,idr);
-		/* User ur=userRepository.findById(ids).get();
-		User us=userRepository.findById(ids).get();
+		 User ur=userRepository.findById(idr).get();
+		 User us=userRepository.findById(ids).get();
 		if(ur.getMailMessage().equals(MailMessage.activated)){
-			emailService.sendSimpleEmail(ur.getEmail(),
-				    "We would like to inform you that you recieved a message from "+ us.getUserFirstName()+" "+us.getUserName(),
-					"New message!");
-		} */
-	//	emailService.sendSimpleEmail("olfa.babai@esprit.tn", "Ahla b chahla", "bussiness budddddddiessss");
+			emailService.SendMail(ur.getEmail(),
+					"New message!",
+					"We would like to inform you that you recieved a message from "+
+					us.getUserFirstName()+" "+us.getUserName());
+		} 
 	}
 	
 	@PutMapping("/activate/{idu}")

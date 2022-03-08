@@ -38,7 +38,6 @@ public class Post implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="post")
 	private List<Comment> comments;
 	
-	@JsonIgnore
 	@ManyToOne
 	private User publisher;
 

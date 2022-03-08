@@ -13,5 +13,5 @@ public interface ICommentService {
 	List<Comment> viewCommentsByPost(int idpost);
 	List<Comment> recentCommentsByPost(int idpost);
 	Comment getCommentById(int idc);
-	Post mostCommentedPost();
+	Post mostCommentedPost(String theme);
 }

@@ -15,7 +15,7 @@ public class DictionnaryService implements IDictionnaryService {
 	@Override
 	public String wordsChecked(String s) {
 		for(Dictionnary d : dictionnaryRepository.findAll()){
-			if (s.contains(d.getWord())){
+			if (s.toLowerCase().contains(d.getWord().toLowerCase())){
 				String ch="";
 			for(int i=1;i<=d.getWord().length();i++){
 				ch+="*";
@@ -24,6 +24,22 @@ public class DictionnaryService implements IDictionnaryService {
 			}
 		}
 		return s;
+	}
+	
+	@Override
+	public void addDictionnary(Dictionnary d){
+		dictionnaryRepository.save(d);
+	}
+	
+	@Override
+	public void updateDictionnary(int idd,Dictionnary d){
+		Dictionnary dy=dictionnaryRepository.getById(idd);
+		dy.setWord(d.getWord());
+	}
+	
+	@Override 
+	public void deleteDictionnary(int idd){
+		dictionnaryRepository.delete(dictionnaryRepository.getById(idd));
 	}
 
 }

@@ -23,6 +23,9 @@ public class CommentService implements ICommentService {
 	@Autowired
 	PostRepository postRepository;
 	
+	@Autowired 
+	PostService postService;
+	
 	@Autowired
 	UserRepository userRepository;
 	
@@ -74,8 +77,8 @@ public class CommentService implements ICommentService {
 	}
 	
 	@Override
-	public Post mostCommentedPost(){
-			List<Post> allposts=postRepository.findAll();
+	public Post mostCommentedPost(String theme){
+			List<Post> allposts=postService.showPostsByTheme(theme);
 			Post selected=new Post();
 			int max=0;
 			for(Post p : allposts){

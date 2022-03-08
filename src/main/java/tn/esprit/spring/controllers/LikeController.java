@@ -55,4 +55,10 @@ public class LikeController {
 			return likeService.mostLikedPostsTheme(idu);	
 	}
 	
+	@GetMapping("/most-liked-post")
+	@ResponseBody
+	public Post mostLikedPost(@RequestParam String theme){
+		return likeService.mostLikedPost(theme);
+	}
+	
 }

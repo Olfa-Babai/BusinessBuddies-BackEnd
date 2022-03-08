@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Followage;
+import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IFollowageService;
 
@@ -80,11 +81,25 @@ public class FollowageController {
 	}
 	
 	// best rated theme in general
-	/*
+
 	@GetMapping("/best-rated-theme")
 	@ResponseBody
 	public String bestRated(){
-		return followageService.bestRatedAll();
+		return followageService.bestRatedTheme();
 	}
-	*/
+	
+	// search themes 
+	@GetMapping("/search-theme")
+	@ResponseBody
+	public List<String> research(@RequestParam String theme){
+		return followageService.searchTheme(theme);
+	}
+	
+	//sorting themes
+	
+	@GetMapping("/sort-theme")
+	@ResponseBody
+	public List<Theme> sortingThemes(@RequestParam String sort){
+		return followageService.sortThemes(sort);
+	}
 }

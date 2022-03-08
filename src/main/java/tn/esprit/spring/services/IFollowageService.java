@@ -3,6 +3,7 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import tn.esprit.spring.entities.Followage;
+import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.User;
 
 public interface IFollowageService {
@@ -11,5 +12,7 @@ public interface IFollowageService {
 	List<Followage> followingsOfU(long idu);
 	List<User> followersTheme(String theme);
 	Followage bestRatedThemeUser(long idu);
-	//String bestRatedAll(); 
+	String bestRatedTheme();
+	List<String> searchTheme(String theme);
+	List<Theme> sortThemes(String sort);
 }

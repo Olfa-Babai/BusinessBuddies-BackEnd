@@ -59,6 +59,12 @@ public class PostController {
 		return postService.showPostsByTheme(theme);
 	}
 	
+	@GetMapping("/nb-posts-theme/")
+	@ResponseBody
+	public int nbPostsTheme(@RequestParam String theme){
+		return postService.showPostsByTheme(theme).size();
+	}
+	
 	//meg kel elnézni
 	@GetMapping("/search-post/")
 	@ResponseBody
@@ -66,10 +72,16 @@ public class PostController {
 		return postService.searchPosts(r, t);
 	}
 	
-	@GetMapping("/recommend-post/")
+	@GetMapping("/recommend-post/{idu}")
 	@ResponseBody
-	public List<Post> recommendedPosts(){
-		return null;
+	public List<Post> recommendedPosts(@PathVariable("idu") long idu){
+		return postService.recommendedPosts(idu);
+	}
+	
+	@GetMapping("/show-posts-user/{idu}")
+	
+	public List<Post> showPostsByUser(@PathVariable("idu") int idu){
+		return postService.showPostsByUser( idu);
 	}
 }
 

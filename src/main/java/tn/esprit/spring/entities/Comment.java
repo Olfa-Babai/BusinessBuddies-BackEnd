@@ -34,11 +34,9 @@ public class Comment implements Serializable {
 	@DateTimeFormat(style="yyyy-MM-dd")
 	private Date published;
 	
-	@JsonIgnore
 	@ManyToOne
 	private Post post;
 	
-	@JsonIgnore
 	@ManyToOne
 	private User commenter;
 

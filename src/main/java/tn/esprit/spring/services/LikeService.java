@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Like;
+import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.TypeLike;
 import tn.esprit.spring.entities.User;
@@ -87,5 +88,25 @@ public class LikeService implements ILikeService {
 			comp.put(t, nb);
 		}
 		return Collections.max(comp.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+	}
+	
+	@Override
+	public Post mostLikedPost(String theme){
+		int max=0;
+		Post post=new Post();
+		for(Post p : postService.showPostsByTheme(theme)){
+			List<Like> likes=new ArrayList<Like>();
+			for(Like l : p.getLikes()){
+				if(l.getType().equals(TypeLike.like)){
+				likes.add(l);
+				}
+				}
+			int nb=likes.size();
+			if(nb>max){
+				max=nb;
+				post=p;
+			}
+		}
+		return post;
 	}
 }

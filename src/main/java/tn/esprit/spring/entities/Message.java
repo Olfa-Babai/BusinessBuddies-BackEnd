@@ -31,12 +31,10 @@ public class Message implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idmessage;
 	
-	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "sender")
     private User sender;
 
-	@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "receiver")
     private User receiver;
@@ -46,7 +44,6 @@ public class Message implements Serializable {
 	private Status status;
 	private LocalDateTime date;
 	
-	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Chat chat;
 

@@ -9,7 +9,7 @@ public interface IPostService {
 	void addPost(long idu,Post p);
 	void updatePost(Post p, int idp);
 	void deletePost(int idp);
-	List<Post> showPostsByUser(Post p, long idu);
+	List<Post> showPostsByUser(long idu);
 	List<Post> showPostsByTheme(String t);
 	List<Post> showAllPosts();
 	List<Post> searchPosts(String p, String t);
