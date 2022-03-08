@@ -2,6 +2,8 @@ package tn.esprit.spring.services;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import tn.esprit.spring.entities.Invitation;
 
 public interface InvitationService {
@@ -11,4 +13,10 @@ public interface InvitationService {
 	Invitation updateInvitation (Invitation invitation);
 	Invitation retrieveInvitation (Long id);
 	List<Invitation> retrieveAllInvitationsSorted();
+	void EnvoiInvitationParEmail(Invitation invi) throws MessagingException;
+	Invitation VerifyExpirationDate(Invitation invit);
+	Invitation ValidationInvitation(Invitation invi,String code);
+	String encryptionAlgo(String code);
+	Boolean compareCodes(String codeCorrect, String code);
+	
 }

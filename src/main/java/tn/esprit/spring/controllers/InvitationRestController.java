@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import tn.esprit.spring.configuration.PDFGenerator;
 import tn.esprit.spring.entities.Invitation;
+import tn.esprit.spring.entities.invitationStatus;
 import tn.esprit.spring.entities.typeInvitation;
 import tn.esprit.spring.services.EmailServiceInvitationImpl;
 import tn.esprit.spring.services.InvitationService;
@@ -39,9 +40,6 @@ public class InvitationRestController {
 	@Autowired
 	InvitationService invitationService;
 	
-	@Autowired
-	private EmailServiceInvitationImpl EmailServiceInvit;
-	
 	@GetMapping("/retrieve-all-invitations")
 	@ResponseBody
 	@ApiOperation(value = "Recuperer la liste des invitations")
@@ -52,16 +50,16 @@ public class InvitationRestController {
 	
 	@GetMapping("/retrieve-all-invitations-asc")
 	@ResponseBody
-	@ApiOperation(value = "Recuperer la liste des invitations dans un ordre ascendant")
+	@ApiOperation(value = "Recuperer la liste des invitations ordonnées")
 	public List<Invitation> getInvitationsAsc() {
 		List<Invitation> listInvitation = invitationService.retrieveAllInvitationsSorted();
 		return listInvitation;
 	}
 	
-	@GetMapping("/retrieve-invitation/{invitation-id}")
-	@ApiOperation(value = "Recuperer une invitation")
+	@GetMapping("/retrieve-invitation/{invitation-id}/")
+	@ApiOperation(value = "Recuperer une invitation par id")
 	@ResponseBody
-	public Invitation retrieveClient(@PathVariable("client-id") Long invitationId) {
+	public Invitation retrieveInvitationById(@PathVariable("invitation-id") Long invitationId) {
 		return invitationService.retrieveInvitation(invitationId);
 	}
 	
@@ -93,21 +91,9 @@ public class InvitationRestController {
 	@ResponseBody
 	public Invitation addInvitation(@RequestBody Invitation invitation) throws MessagingException
 	{
+		invitation.setInvitationStatus(invitationStatus.PENDING);
 		Invitation invit = invitationService.addInvitation(invitation);
-		if (invit.getTypeInvitation().equals(typeInvitation.COMPANY)){
-			//@EventListener(ApplicationReadyEvent.class)
-			EmailServiceInvit.sendEmailWithAttachment("mohamedleith.majdoub@esprit.tn",
-					    "This is an invitation to join Business Buddies",
-						"This email has an attachment",
-						"C:\\Users\\user16\\Pictures\\m.jpg");
-				
-			}
-		else if (invit.getTypeInvitation().equals(typeInvitation.TRIP)){
-			EmailServiceInvit.sendEmailWithAttachment("mohamedleith.majdoub@esprit.tn",
-				    "This is an invitation to join a trip",
-					"This email has an attachment",
-					"C:\\Users\\user16\\Pictures\\m.jpg");
-			} 
+		invitationService.EnvoiInvitationParEmail(invit);
 		return invit;
 	}
 	
@@ -123,5 +109,21 @@ public class InvitationRestController {
 	@ResponseBody
 	public Invitation modifyInvitation(@RequestBody Invitation invitation) {
 		return invitationService.updateInvitation(invitation);
+	}
+	
+	@PutMapping("/expiration-invitation/{invitation-id}")
+	@ApiOperation(value = "Expiration de l'invitation")
+	@ResponseBody
+	public Invitation VerifyExpiration(@PathVariable("invitation-id") Long invitationId) {
+		Invitation invitation = invitationService.retrieveInvitation(invitationId);
+		return invitationService.VerifyExpirationDate(invitation); 
+	}
+	
+	@PutMapping("/valid-invitation/{invitation-id}/{code-invitation}")
+	@ApiOperation(value = "validation de l'invitation")
+	@ResponseBody
+	public Invitation VerifyIfValid(@PathVariable("invitation-id") Long invitationId,@PathVariable("code-invitation") String code) {
+		Invitation invitation = invitationService.retrieveInvitation(invitationId);
+		return invitationService.ValidationInvitation(invitation, code);
 	}
 }
