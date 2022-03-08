@@ -63,8 +63,7 @@ public class ComplaintController {
 		ComplaintService.responseByMail(id,text);
 		 return "Mail Sended";
 		 
-	 }
-	 
+	 }	 
 	 
 	 @GetMapping("/ByUser/{id}")
 	 @ResponseBody
@@ -77,7 +76,14 @@ public class ComplaintController {
 		@ResponseBody
 		public String BlockComplaint(@PathVariable int id)  {
 			 return ComplaintService.BlockComplaint(id);
-		}	
+		}
+	 
+	 @PostMapping("/add-listeComplaint/{User_Id}")
+	 @ResponseBody
+	 void ajouterEtaffecterListeComplaint(@RequestBody List<Complaint> lb,@PathVariable("User_Id") Long User_Id) {
+	 ComplaintService.ajouterEtaffecterListeComplaint(lb, User_Id);
+	 }
+	 
 }
 
 

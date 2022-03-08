@@ -137,13 +137,38 @@ public class FeedbackSERVICE implements IFeedbackSERVICE{
 	
 	@Override
 	public List<Feedback> searchFeedback(String s, long idu) {
-		 List<Feedback> msgs=new ArrayList<Feedback>();
-		//List<Feedback> allmsgs=(List<Feedback>)FeedbackRepository.findAll();
-		//for(Feedback m : allmsgs){
-			//if (m.getBody().contains(s) && (m.getSender().getUser_Id()==idu || m.getReceiver().getUser_Id()==idu)) {
-			//	msgs.add(m);
-			//}
-		//}
-		return msgs;
+		List<Feedback> FB=new ArrayList<Feedback>();
+		List<Feedback> FBs=(List<Feedback>)FeedbackRepository.findAll();
+		for(Feedback m : FBs){
+			if (m.getComment().toLowerCase().contains(s.toLowerCase()) || m.getNameF().toLowerCase().equals(s.toLowerCase()) ) {
+			FBs.add(m);
+						}
+			}
+	return FBs;
+	} 
+	
+	@Override
+	public List<Feedback> nbFeedbacksEvaluative(long idu){
+	List<Feedback> fbs=new ArrayList<Feedback>();
+	User u=userRepository.findById(idu).get();
+	for(Feedback f : FeedbackRepository.findAll()){
+		if(f.getUsers().equals(u) && f.getKind().equals(FeedBacksKinds.evaluatif)){
+			fbs.add(f);
+		}
 	}
+	return fbs;
+	}
+	
+	@Override
+	public List<Feedback> nbFeedbacksActif(long idu){
+	List<Feedback> fbs=new ArrayList<Feedback>();
+	User u=userRepository.findById(idu).get();
+	for(Feedback f : FeedbackRepository.findAll()){
+		if(f.getUsers().equals(u) && f.getKind().equals(FeedBacksKinds.actif)){
+			fbs.add(f);
+		}
+	}
+	return fbs;
+	}
+	
 }

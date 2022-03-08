@@ -26,6 +26,10 @@ public interface IFeedbackSERVICE {
 
 	List<Feedback> searchFeedback(String s, long idu);
 
+	List<Feedback> nbFeedbacksEvaluative(long idu);
+
+	List<Feedback> nbFeedbacksActif(long idu);
+
 	
 	
 	

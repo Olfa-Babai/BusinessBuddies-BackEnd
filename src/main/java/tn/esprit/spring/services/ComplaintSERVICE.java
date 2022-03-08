@@ -101,6 +101,15 @@ public class ComplaintSERVICE implements IComplaintSERVICE{
 		return ret;
 	}
 	
+	@Override
+	public void ajouterEtaffecterListeComplaint(List<Complaint> lb, Long User_Id) {
+	complaintRepository.saveAll(lb);
+	User user = userRepository.findById(User_Id).orElse(null);
+	for (Complaint complaint : lb) {
+	complaint.setUsers(user);
+	}
+	complaintRepository.saveAll(lb);
+	}	
 	
 }
 

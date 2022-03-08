@@ -23,6 +23,8 @@ public interface IComplaintSERVICE {
 
 	String BlockComplaint(int idC);
 
+	void ajouterEtaffecterListeComplaint(List<Complaint> lb, Long User_Id);
+
 	
 	
 }

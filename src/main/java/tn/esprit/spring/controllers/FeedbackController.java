@@ -85,6 +85,11 @@ public class FeedbackController {
 		//List<Message> searchMessages(@RequestParam String m, @PathVariable("idu") long idu){
 			//return FeedbackService.searchFeedback(m,idu);
 		//}	
-	
+	 @GetMapping("/search-Feedback/{idu}")
+	 @ResponseBody
+	 List<Feedback> searchFeedback(@RequestParam String m, @PathVariable("idu") long idu){
+	 return FeedbackService.searchFeedback(m,idu);
+	 }
+	 
 	
 }

@@ -28,6 +28,15 @@ public class Feedback implements Serializable {
     private String nameF;
 	@Column(nullable=false, length=500)
     private String comment;
+	@Column
+	@Enumerated(EnumType.STRING)
+    private FeedbackType type ;
+	@Enumerated(EnumType.STRING)
+    private FeedBacksKinds kind ;
+	@Column 
+	private boolean Blocked ;
+	@ManyToOne
+	User Users;
 	public int getIdF() {
 		return idF;
 	}
@@ -70,15 +79,7 @@ public class Feedback implements Serializable {
 	public void setUsers(User users) {
 		Users = users;
 	}
-	@Column
-	@Enumerated(EnumType.STRING)
-    private FeedbackType type ;
-	@Enumerated(EnumType.STRING)
-    private FeedBacksKinds kind ;
-	@Column 
-	private boolean Blocked ;
-	@ManyToOne
-	User Users;
+	
 	
 	
 	
