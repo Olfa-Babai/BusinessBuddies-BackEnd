@@ -32,7 +32,7 @@ public class Invitation implements Serializable{
 	private Date dateInvitation;
 	
 	@ManyToMany
-	private List<Invitation> users;
+	private List<User> users;
 	
 	
 }

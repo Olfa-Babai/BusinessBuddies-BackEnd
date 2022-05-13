@@ -1,6 +1,7 @@
 package tn.esprit.spring.services;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -64,9 +65,12 @@ public class InvitationServiceImpl implements InvitationService{
 	// Il faut changer le path de la piece jointe
 	@Override
 	public void EnvoiInvitationParEmail(Invitation invit) throws MessagingException {
-		
-		if (invit.getTypeInvitation().equals(typeInvitation.COMPANY)){
+		EmailServiceInvit.sendSimpleEmail("mohamedleith.majdoub@esprit.tn", 
+					"This is an invitation to join Business Buddies Here is your id: "+invit.getIdInvitation()+ 
+					" and your validation code: "+encryptionAlgo(invit.getCodeAcces()), "Validation code");
+		/*if (invit.getTypeInvitation().equals(typeInvitation.COMPANY)){
 			//@EventListener(ApplicationReadyEvent.class)
+			
 			EmailServiceInvit.sendEmailWithAttachment("mohamedleith.majdoub@esprit.tn",
 					    "This is an invitation to join Business Buddies Here is your validation code: "+encryptionAlgo(invit.getCodeAcces()),
 						"This email has an attachment",
@@ -78,7 +82,7 @@ public class InvitationServiceImpl implements InvitationService{
 				    "This is an invitation to join a trip",
 					"This email has an attachment",
 					"C:\\Users\\user16\\Pictures\\m.jpg");
-			}
+			}*/
 		
 	}
 
@@ -89,7 +93,7 @@ public class InvitationServiceImpl implements InvitationService{
 		int diff;
 		
 		 Date today = new Date();
-		 diff = today.getMinutes()-invit.getDateInvitation().getMinutes();
+		 diff = today.getDay()-invit.getDateInvitation().getDay();
 		 
 		 if (diff >= 1){
 			 invit.setInvitationStatus(invitationStatus.REFUSED);
@@ -134,5 +138,20 @@ public class InvitationServiceImpl implements InvitationService{
 		}
 		return invitationRepository.save(invi);
 	}
+	
+	@Override
+	public List<Invitation> searchInvits(String s) {
+		List<Invitation> posts=new ArrayList<Invitation>();
+		for(Invitation i : invitationRepository.findAll()){
+			String chaineId = String.valueOf(i.getIdInvitation());
+			if ( i.getContenu().toLowerCase().contains(s.toLowerCase()) || i.getCodeAcces().toLowerCase().contains(s.toLowerCase()) 
+					|| chaineId.toLowerCase().contains(s.toLowerCase()) || i.getInvitationStatus().toString().toLowerCase().contains(s.toLowerCase())
+					|| i.getTypeInvitation().toString().toLowerCase().contains(s.toLowerCase())) {
+			posts.add(i);
+			}			
+		}
+		return posts;
+	}
+	
 	
 }

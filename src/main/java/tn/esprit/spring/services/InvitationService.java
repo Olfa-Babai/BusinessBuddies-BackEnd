@@ -18,5 +18,6 @@ public interface InvitationService {
 	Invitation ValidationInvitation(Invitation invi,String code);
 	String encryptionAlgo(String code);
 	Boolean compareCodes(String codeCorrect, String code);
+	List<Invitation> searchInvits(String s);
 	
 }

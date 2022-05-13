@@ -12,6 +12,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +37,8 @@ import tn.esprit.spring.services.InvitationService;
 @RestController
 @RequestMapping("/invitation")
 @Api(tags="Invitation Management")
+//@CrossOrigin(origins="http://localhost:4200/")
+@CrossOrigin
 public class InvitationRestController {
 	
 	@Autowired
@@ -104,11 +108,20 @@ public class InvitationRestController {
 		invitationService.deleteInvitation(invitationId);
 	}
 	
-	@PutMapping("/modify-invitation")
+	@PutMapping("/modify-invitation/{invitation-id}")
 	@ApiOperation(value = "Modifier une invitation")
 	@ResponseBody
-	public Invitation modifyInvitation(@RequestBody Invitation invitation) {
-		return invitationService.updateInvitation(invitation);
+	public Invitation modifyInvitation(@PathVariable(value = "invitation-id") Long invitationId,
+			@RequestBody Invitation invitation) {
+		Invitation invit = invitationService.retrieveInvitation(invitationId);
+		
+		invit.setContenu(invitation.getContenu());
+		invit.setCodeAcces(invitation.getCodeAcces());
+		invit.setDateInvitation(invitation.getDateInvitation());
+		invit.setInvitationStatus(invitation.getInvitationStatus());
+		invit.setTypeInvitation(invitation.getTypeInvitation());
+		
+		return invitationService.updateInvitation(invit);
 	}
 	
 	@PutMapping("/expiration-invitation/{invitation-id}")
@@ -125,5 +138,12 @@ public class InvitationRestController {
 	public Invitation VerifyIfValid(@PathVariable("invitation-id") Long invitationId,@PathVariable("code-invitation") String code) {
 		Invitation invitation = invitationService.retrieveInvitation(invitationId);
 		return invitationService.ValidationInvitation(invitation, code);
+	}
+	
+	@GetMapping("/search-invitation/")
+	@ApiOperation(value = "recherche de l'invitation")
+	@ResponseBody
+	public List<Invitation> searchPosts(@RequestParam String s){
+		return invitationService.searchInvits(s);
 	}
 }
