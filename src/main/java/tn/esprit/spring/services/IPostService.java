@@ -14,6 +14,9 @@ public interface IPostService {
 	List<Post> showAllPosts();
 	List<Post> searchPosts(String p, String t);
 	List<Post> recommendedPosts(long idu);
+	List<Post> showPostsByUserNTheme(String theme, long idu);
+	int ratingstheme(String theme);
+	int interactiontheme(String theme);
 	
 	// research + filter
 	

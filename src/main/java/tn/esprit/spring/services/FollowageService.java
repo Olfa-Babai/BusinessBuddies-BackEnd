@@ -25,6 +25,11 @@ public class FollowageService implements IFollowageService {
 	UserRepository userRepository;
 
 	@Override
+	public User verifyingUser(String u){
+		return userRepository.findByUsername(u).get();
+	}
+	
+	@Override
 	public void addFollow(long idUser, Followage followage) {
 		User u=userRepository.findById(idUser).orElse(null);
 		followage.setFollower(u);

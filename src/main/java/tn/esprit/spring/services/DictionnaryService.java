@@ -1,5 +1,7 @@
 package tn.esprit.spring.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,11 @@ public class DictionnaryService implements IDictionnaryService {
 	@Override 
 	public void deleteDictionnary(int idd){
 		dictionnaryRepository.delete(dictionnaryRepository.getById(idd));
+	}
+
+	@Override
+	public List<Dictionnary> listall() {
+		return dictionnaryRepository.findAll();
 	}
 
 }

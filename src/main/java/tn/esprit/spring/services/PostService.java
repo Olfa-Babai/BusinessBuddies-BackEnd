@@ -27,6 +27,9 @@ public class PostService implements IPostService {
 	IFollowageService followageService;
 	
 	@Autowired
+	FollowageRepository fr;
+	
+	@Autowired
 	ILikeService likeService;
 	
 	@Override
@@ -50,7 +53,20 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<Post> showPostsByUser( long idu) {
+	public List<Post> showPostsByUserNTheme(String theme, long idu) {
+		User u=userRepository.findById(idu).get();
+		List<Post> posts=u.getPosts();
+		List<Post> result=new ArrayList<Post>();
+		for(Post p : posts){
+			if (p.getTheme().toString().equals(theme)){
+				result.add(p);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Post> showPostsByUser(long idu) {
 		User u=userRepository.findById(idu).get();
 		return u.getPosts();
 	}
@@ -142,6 +158,22 @@ public class PostService implements IPostService {
 			posts=posts.stream().limit(2).collect(Collectors.toList());	
 		}
 		return posts;
+	}
+
+	@Override
+	public int ratingstheme(String theme) {
+		int s=0;
+		for(Followage f : fr.findAll()){
+			if(f.getTheme().toString().equals(theme)){
+				s=s+f.getRating();
+			}
+		}
+		return s;
+	}
+
+	@Override
+	public int interactiontheme(String theme) {
+		return this.showPostsByTheme(theme).size();
 	}
 	
 }

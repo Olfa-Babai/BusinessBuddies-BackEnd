@@ -1,5 +1,7 @@
 package tn.esprit.spring.services;
 
+import java.util.List;
+
 import tn.esprit.spring.entities.Dictionnary;
 
 public interface IDictionnaryService {
@@ -10,6 +12,7 @@ public interface IDictionnaryService {
 
 	void updateDictionnary(int idd, Dictionnary d);
 
-	void deleteDictionnary(int idd);	
+	void deleteDictionnary(int idd);
+	List<Dictionnary> listall();
 	
 }

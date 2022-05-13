@@ -97,4 +97,5 @@ public class Post implements Serializable {
 		this.publisher = publisher;
 	}
 	
+	
 }

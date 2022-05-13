@@ -25,7 +25,6 @@ public class Followage implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Theme theme;
 	private int rating;
-	 @JsonIgnore
 	 @ManyToOne
 	 private User follower;
 	public int getIdfollowage() {

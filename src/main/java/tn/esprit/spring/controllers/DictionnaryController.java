@@ -1,6 +1,9 @@
 package tn.esprit.spring.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import tn.esprit.spring.services.IDictionnaryService;
 
 @RestController
 @RequestMapping("/word")
+@CrossOrigin(origins = "*")
 public class DictionnaryController {
 
 	@Autowired
@@ -26,6 +30,12 @@ public class DictionnaryController {
 	@ResponseBody
 	public String wordsChecked(@RequestParam String ch){
 		return dictionnaryService.wordsChecked(ch);
+	}
+	
+	@GetMapping("/words")
+	@ResponseBody
+	public List<Dictionnary> words(){
+		return dictionnaryService.listall();
 	}
 	
 	@PostMapping("/add-word")

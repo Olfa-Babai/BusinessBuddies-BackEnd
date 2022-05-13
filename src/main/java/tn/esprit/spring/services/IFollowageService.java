@@ -15,4 +15,5 @@ public interface IFollowageService {
 	String bestRatedTheme();
 	List<String> searchTheme(String theme);
 	List<Theme> sortThemes(String sort);
+	User verifyingUser(String u);
 }

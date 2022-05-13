@@ -3,6 +3,7 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,9 @@ import tn.esprit.spring.entities.Followage;
 import tn.esprit.spring.entities.Theme;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IFollowageService;
-
+import tn.esprit.spring.services.IUserService;
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/follow")
 public class FollowageController {
 
@@ -26,6 +28,12 @@ public class FollowageController {
 	IFollowageService followageService;
 	
 	//follow
+	
+	@GetMapping("/verifying/")
+	@ResponseBody()
+	public User verifyingUser(@RequestParam String u){
+		return followageService.verifyingUser(u);
+	}
 	
 	@PostMapping("/add-followage/{idu}")
 	@ResponseBody
@@ -42,7 +50,6 @@ public class FollowageController {
 	}
 	
 	// a user's followings 
-	
 	@GetMapping("/find-followings/{idu}")
 	@ResponseBody
 	public List<Followage> followingsOfUser(@PathVariable("idu") long idu){

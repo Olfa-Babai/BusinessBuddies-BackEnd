@@ -3,6 +3,7 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.spring.entities.Like;
 import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.Theme;
+import tn.esprit.spring.entities.TypeLike;
 import tn.esprit.spring.services.ILikeService;
 
 @RestController
 @RequestMapping("/like")
+@CrossOrigin(origins = "*")
 public class LikeController {
 
 	@Autowired
@@ -28,6 +31,7 @@ public class LikeController {
 	@PostMapping("/add-like/{idp}/{idu}")
 	@ResponseBody
 	public void addLike(@PathVariable("idp")int idp,@PathVariable("idu")long idu, @RequestBody Like like){
+		like.setType(TypeLike.like);
 		likeService.addLike(idp,idu,like);
 	}
 	
